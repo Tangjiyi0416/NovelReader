@@ -5220,6 +5220,11 @@ nullthrows@^1.1.1:
   resolved "https://registry.yarnpkg.com/nullthrows/-/nullthrows-1.1.1.tgz#7818258843856ae971eae4208ad7d7eb19a431b1"
   integrity sha512-2vPPEi+Z7WqML2jZYddDIfy5Dqb0r2fze2zTxNNknZaFpVHU3mFB3R+DWeJWGVx0ecvttSGlJTI+WG+8Z4cDWw==
 
+number-to-chinese-words@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/number-to-chinese-words/-/number-to-chinese-words-1.0.20.tgz#7fc0ca64a89124274a9a7ebe32582eac89b4173a"
+  integrity sha512-pjqI/H7V+FXrvQ2w9+GQHY6QbyNjYWDJmosjEZGgaParA2bkSxwF1IbsTBZD+R79RL4jkob2whMZDELxOSpH7A==
+
 ob1@0.64.0:
   version "0.64.0"
   resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.64.0.tgz#f254a55a53ca395c4f9090e28a85483eac5eba19"

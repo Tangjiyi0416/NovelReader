@@ -44,10 +44,12 @@ export const theme = extendTheme({
       light30: "#FEFEF8",
       light10: "#BC0B0B",
       lightText: "#131313",
+      lightCard: "#F1F0E9",
       dark60: "#222629",
       dark30: "#2F3739",
       dark10: "#DFD2B8",
       darkText: "#FAF7EE",
+      darkCard: "#3C413E",
     },
   },
   config: {

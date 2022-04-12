@@ -21,7 +21,6 @@ export default function Drawer({ navigation }) {
   return (
     <DrawerNav.Navigator
       screenOptions={{
-        headerShown: false,
         headerShadowVisible: false,
         headerStyle: {
           backgroundColor: colorMode === "light" ? "#E8E5D9" : "#222629",

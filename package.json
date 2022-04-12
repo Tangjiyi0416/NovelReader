@@ -20,6 +20,7 @@
     "expo-file-system": "~13.1.4",
     "expo-status-bar": "~1.2.0",
     "native-base": "^3.3.10",
+    "number-to-chinese-words": "^1.0.20",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",

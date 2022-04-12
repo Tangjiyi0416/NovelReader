@@ -1,0 +1,315 @@
+{
+    "Asset reusing": {
+        "title": "Asset reusing",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [
+            "tag1"
+        ],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "progress": {
+            "chapter": 1,
+            "section": 3,
+            "line": 12
+        },
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "一"
+        }
+    },
+    "有趣小說書名": {
+        "title": "有趣小說書名",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [
+            "tag1"
+        ],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "一"
+        }
+    },
+    "沒那麼有趣小說書名": {
+        "title": "沒那麼有趣小說書名",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [
+            "tag1"
+        ],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "1"
+        }
+    },
+    "Invention of All Time": {
+        "title": "Invention of All Time",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [
+            "tag2"
+        ],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "1"
+        }
+    },
+    "Invention of All a": {
+        "title": "Invention of All a",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [
+            "tag2"
+        ],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "1"
+        }
+    },
+    "Invention of All b": {
+        "title": "Invention of All b",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [
+            "tag2"
+        ],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "1"
+        }
+    },
+    "Invention of All c": {
+        "title": "Invention of All c",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [
+            "tag2"
+        ],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "1"
+        }
+    },
+    "Invention of All d": {
+        "title": "Invention of All d",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [
+            "tag2"
+        ],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "1"
+        }
+    },
+    "5D Chess - Terminator’s Gambit": {
+        "title": "5D Chess - Terminator’s Gambit",
+        "author": "Oliver Lugg",
+        "desc": "5D Chess With Multiverse Time Travel is a brain-wrinkling experiment in making a stupid idea into a genius end product. In this book, Oliver Lugg try to teach you how it works, analyse its shortcomings, and compare it to about seven different time travel films.",
+        "tags": [
+            "Chess",
+            "Psychological Horror"
+        ],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "progress": {
+            "chapter": 1,
+            "line": 1
+        },
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "part "
+            },
+            "mode": "1"
+        }
+    },
+    "書（一）": {
+        "title": "書（一）",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "progress": {
+            "chapter": 1,
+            "line": 1
+        },
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "節"
+            },
+            "mode": "1"
+        }
+    },
+    "書（二）": {
+        "title": "書（二）",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "progress": {
+            "chapter": 1,
+            "section": 1
+        },
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "一"
+        }
+    },
+    "書（三）": {
+        "title": "書（三）",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "progress": {
+            "chapter": 1,
+            "section": 1
+        },
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "1"
+        }
+    },
+    "書（四）": {
+        "title": "書（四）",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "progress": {
+            "chapter": 1,
+            "section": 1
+        },
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "回"
+            },
+            "mode": "一"
+        }
+    },
+    "很厚的書": {
+        "title": "很厚的書",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "progress": {
+            "chapter": 471,
+            "section": 99
+        },
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "1"
+        }
+    },
+    "這邊還有一本": {
+        "title": "這邊還有一本",
+        "author": "xxx",
+        "desc": "N/A",
+        "tags": [],
+        "uri": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        "chapterDisplay": {
+            "chapter": {
+                "pre": "第",
+                "suf": "部"
+            },
+            "section": {
+                "pre": "第",
+                "suf": "章"
+            },
+            "mode": "1"
+        }
+    }
+}

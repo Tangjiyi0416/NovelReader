@@ -69,14 +69,10 @@ export default function TabBar({ navigation }) {
   );
   const { colorMode } = useColorMode();
   const leftButton = () => (
-    <HeaderButton
-      name="menu"
-      onPress={navigation.openDrawer}
-      marginLeft="8px"
-    />
+    <HeaderButton name="menu" onPress={navigation.openDrawer} marginLeft={2} />
   );
   const rightButton = () => (
-    <HStack gap="8px" marginRight="8px">
+    <HStack space={2} marginRight={2}>
       <HeaderButton name="magnify" />
       <HeaderButton name="dots-vertical" />
     </HStack>
@@ -88,7 +84,8 @@ export default function TabBar({ navigation }) {
         tabBarStyle: {
           position: "absolute",
           borderTopColor: "transparent",
-          borderRadius: 20,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
           height: 50,
           backgroundColor: colorMode === "light" ? "#FEFEF8" : "#2F3739",
         },
@@ -97,6 +94,8 @@ export default function TabBar({ navigation }) {
         headerStyle: {
           backgroundColor: colorMode === "light" ? "#E8E5D9" : "#222629",
         },
+        headerLeft: leftButton,
+        headerRight: rightButton,
       }}
     >
       <TabNav.Screen
@@ -110,13 +109,13 @@ export default function TabBar({ navigation }) {
               height={44}
               alignItems="center"
               justifyContent="center"
-              borderRadius="12px"
+              borderRadius={12}
             >
               <Icon
                 as={MaterialCommunityIcons}
                 name="home"
                 color={tabBTNTextColor}
-                size="24px"
+                size={6}
               />
               <Text color={tabBTNTextColor}>主頁</Text>
             </Box>
@@ -133,7 +132,7 @@ export default function TabBar({ navigation }) {
               as={MaterialCommunityIcons}
               name="book-plus"
               color={tabBTNColorFocused}
-              size="24px"
+              size={8}
             />
           ),
           tabBarButton: (props) => <BookImportButton {...props} />,
@@ -156,7 +155,7 @@ export default function TabBar({ navigation }) {
                 as={MaterialCommunityIcons}
                 name="bookshelf"
                 color={tabBTNTextColor}
-                size="24px"
+                size="6"
               />
               <Text color={tabBTNTextColor}>書架</Text>
             </Box>
