@@ -18,8 +18,10 @@ import HomeScreen from "../screens/HomeScreen";
 import BookShelfScreen from "../screens/BookShlefScreen";
 
 import React from "react";
-import HeaderButton from "../components/HeaderButton";
+import TransButton from "../components/TransButton";
 const BookImportButton = ({ children, onPress }) => {
+  const { colorMode } = useColorMode();
+
   return (
     <Button
       onPress={onPress}
@@ -29,6 +31,7 @@ const BookImportButton = ({ children, onPress }) => {
       width={50}
       height={50}
       borderRadius={25}
+      colorScheme={colorMode === "light" ? "primary" : "darkPrimary"}
     >
       {children}
     </Button>
@@ -41,7 +44,7 @@ const BookImportScreenWrapper = ({ navigation }) => {
       e.preventDefault();
       // Do something manually
       // ...
-      DocumentPicker.getDocumentAsync()
+      DocumentPicker.getDocumentAsync({ type: "text/plain" })
         .then((result) => {
           if (result.type == "success")
             navigation.navigate("BookImport", { documentResult: result });
@@ -69,12 +72,12 @@ export default function TabBar({ navigation }) {
   );
   const { colorMode } = useColorMode();
   const leftButton = () => (
-    <HeaderButton name="menu" onPress={navigation.openDrawer} marginLeft={2} />
+    <TransButton name="menu" onPress={navigation.openDrawer} marginLeft={2} />
   );
   const rightButton = () => (
     <HStack space={2} marginRight={2}>
-      <HeaderButton name="magnify" />
-      <HeaderButton name="dots-vertical" />
+      <TransButton name="magnify" />
+      <TransButton name="dots-vertical" />
     </HStack>
   );
   return (
@@ -87,7 +90,7 @@ export default function TabBar({ navigation }) {
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           height: 50,
-          backgroundColor: colorMode === "light" ? "#FEFEF8" : "#2F3739",
+          backgroundColor: colorMode === "light" ? "#FEFEF8" : "#424E52",
         },
         headerShadowVisible: false,
         headerTitleStyle: { display: "none" },

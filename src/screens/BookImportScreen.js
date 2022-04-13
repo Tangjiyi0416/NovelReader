@@ -3,11 +3,20 @@ import { Box, Text, IconButton } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 
-// {FileSystem.readAsStringAsync(result.uri).then((str) => {
-//   return str;
-// })}
-
 export default function BookImportScreen({ route, navigation }) {
+  // const toast = useToast();
+  // let content;
+  // React.useEffect(() => {
+  //   FileSystem.readAsStringAsync(route.param?.book.uri)
+  //     .then((result) => content)
+  //     .catch(() =>
+  //       toast.show({
+  //         description: "faild to load target file",
+  //         bg: "#F00",
+  //       })
+  //     );
+  // }, []);
+  navigation;
   return (
     <Box
       flex={1}

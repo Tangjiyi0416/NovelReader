@@ -1,6 +1,13 @@
 import "react-native-gesture-handler";
 import * as React from "react";
-import { Text, Box, NativeBaseProvider, Stack, Icon } from "native-base";
+import {
+  Text,
+  Box,
+  NativeBaseProvider,
+  Stack,
+  Icon,
+  StatusBar,
+} from "native-base";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -16,17 +23,22 @@ export default function App() {
   return (
     <NavigationContainer>
       <NativeBaseProvider theme={theme}>
+        <StatusBar />
         <StackNav.Navigator>
           <StackNav.Screen
             name="Main"
             component={Drawer}
             options={{ headerShown: false }}
           />
-          <StackNav.Screen name="BookImport" component={BookImportScreen} />
+          <StackNav.Screen
+            name="BookImport"
+            component={BookImportScreen}
+            options={{ animation: "fade_from_bottom" }}
+          />
           <StackNav.Screen
             name="BookReader"
             component={BookReaderScreen}
-            options={{ headerShown: false }}
+            options={{ headerShown: false, animation: "fade_from_bottom" }}
           />
         </StackNav.Navigator>
       </NativeBaseProvider>

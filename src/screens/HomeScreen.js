@@ -7,7 +7,6 @@ import {
   IconButton,
   Text,
 } from "native-base";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BookButton from "../components/BookButton";
 import bookMap from "../test/books.json";
 import testData from "../test/testData.json";
@@ -52,7 +51,7 @@ export default function HomeScreen({ navigation }) {
         <FlatList
           horizontal={true}
           data={section.data}
-          keyExtractor={(item) => item.title}
+          keyExtractor={(item) => item + section.title}
           renderItem={bookNormal}
           showsHorizontalScrollIndicator={false}
         />
