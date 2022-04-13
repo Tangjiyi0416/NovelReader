@@ -57,7 +57,7 @@ export default function BookShelfScreen({ navigation }) {
         data={["Psychological Horror", "Sci-fi", "Short"]}
         keyExtractor={(item) => item}
         renderItem={({ item }) => (
-          <Button mx={2}>
+          <Button colorScheme="indigo" variant="outline" mx={2}>
             <Text fontSize={18}>{item}</Text>
           </Button>
         )}
