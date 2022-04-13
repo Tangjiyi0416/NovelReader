@@ -48,11 +48,21 @@ export default function BookShelfScreen({ navigation }) {
   return (
     <Box
       flex={1}
-      alignItems="center"
-      //   justifyContent="center"
       _light={{ bg: "myColors.light60" }}
       _dark={{ bg: "myColors.dark60" }}
     >
+      <FlatList
+        m={2}
+        horizontal={true}
+        data={["Psychological Horror", "Sci-fi", "Short"]}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <Button mx={2}>
+            <Text fontSize={18}>{item}</Text>
+          </Button>
+        )}
+        showsHorizontalScrollIndicator={false}
+      />
       <SectionList
         mb={50} //tabbar height
         sections={testData}

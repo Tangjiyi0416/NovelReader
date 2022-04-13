@@ -36,7 +36,7 @@ export default function HomeScreen({ navigation }) {
   const sections = ({ section }) => {
     if (section.title === "繼續閱讀")
       return (
-        <Box>
+        <Box mt={8}>
           <Text ml={4} fontSize="3xl">
             {section.title}
           </Text>
@@ -61,8 +61,6 @@ export default function HomeScreen({ navigation }) {
   return (
     <Box
       flex={1}
-      alignItems="center"
-      //   justifyContent="center"
       _light={{ bg: "myColors.light60" }}
       _dark={{ bg: "myColors.dark60" }}
     >

@@ -2,10 +2,10 @@ import "react-native-gesture-handler";
 import * as React from "react";
 import {
   Text,
-  Box,
+  Button,
   NativeBaseProvider,
-  Stack,
-  Icon,
+  HStack,
+  useColorMode,
   StatusBar,
 } from "native-base";
 
@@ -33,7 +33,7 @@ export default function App() {
           <StackNav.Screen
             name="BookImport"
             component={BookImportScreen}
-            options={{ animation: "fade_from_bottom" }}
+            options={{ animation: "fade_from_bottom", headerShown: false }}
           />
           <StackNav.Screen
             name="BookReader"

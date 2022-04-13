@@ -2,6 +2,7 @@ import { Box, Button, Icon } from "native-base";
 import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useColorMode } from "native-base";
+
 export default function ActiveButton({ name, iconSize, onPress, ...props }) {
   const { colorMode } = useColorMode();
   return (

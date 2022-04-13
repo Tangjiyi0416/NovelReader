@@ -72,12 +72,17 @@ export default function TabBar({ navigation }) {
   );
   const { colorMode } = useColorMode();
   const leftButton = () => (
-    <TransButton name="menu" onPress={navigation.openDrawer} marginLeft={2} />
+    <TransButton
+      size={8}
+      name="menu"
+      onPress={navigation.openDrawer}
+      marginLeft={2}
+    />
   );
   const rightButton = () => (
     <HStack space={2} marginRight={2}>
-      <TransButton name="magnify" />
-      <TransButton name="dots-vertical" />
+      <TransButton size={8} name="magnify" />
+      <TransButton size={8} name="dots-vertical" />
     </HStack>
   );
   return (
@@ -129,6 +134,7 @@ export default function TabBar({ navigation }) {
         name="Import"
         component={BookImportScreenWrapper}
         options={{
+          headerShown: false,
           lazy: false,
           tabBarIcon: ({ focused }) => (
             <Icon
