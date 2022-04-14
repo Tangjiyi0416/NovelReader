@@ -8,29 +8,29 @@ import {
   Text,
 } from "native-base";
 import BookButton from "../components/BookButton";
-// import testBookMap from "../test/books.json";
+import bookMap from "../test/books.json";
 import testData from "../test/testData.json";
 import * as FileSystem from "expo-file-system";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function HomeScreen({ navigation }) {
   const path = FileSystem.documentDirectory;
-  const { bookMap } = useSelector((state) => state.bookData);
+  // const { bookMap } = useSelector((state) => state.bookData);
   const dispatch = useDispatch();
   const [data, setData] = useState(testData);
   // console.warn(bookMap);
   // console.warn(path + "books.jsonh");
-  React.useEffect(() => {
-    FileSystem.readAsStringAsync(path + "books.json")
-      .then((result) => {
-        bookMap = JSON.parse(result);
-      })
-      .catch(() => console.warn("no record yet."))
-      .finally(() => {
-        setData([...data, Object.keys(bookMap)]);
-        setBookMap({ ...bookMap, ...testBookMap });
-      });
-  }, []);
+  // React.useEffect(() => {
+  //   FileSystem.readAsStringAsync(path + "books.json")
+  //     .then((result) => {
+  //       bookMap = JSON.parse(result);
+  //     })
+  //     .catch(() => console.warn("no record yet."))
+  //     .finally(() => {
+  //       setData([...data, Object.keys(bookMap)]);
+  //       setBookMap({ ...bookMap, ...testBookMap });
+  //     });
+  // }, []);
 
   const bookBig = (item) => (
     <BookButton

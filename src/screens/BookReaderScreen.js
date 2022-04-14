@@ -79,19 +79,19 @@ export default function BookReaderScreen({ route, navigation }) {
             _light={{ bg: "myColors.light30" }}
             _dark={{ bg: "myColors.dark30" }}
           >
-            <Button colorScheme="myButton">
+            <Button flex={1} colorScheme="myButton">
               <Text fontSize={28}>目錄</Text>
             </Button>
-            <Button colorScheme="myButton">
+            <Button flex={1} colorScheme="myButton">
               <Text fontSize={28}>版面</Text>
             </Button>
-            <Button colorScheme="myButton">
+            <Button flex={1} colorScheme="myButton">
               <Text fontSize={28}>顏色</Text>
             </Button>
-            <Button colorScheme="myButton">
+            <Button flex={1} colorScheme="myButton">
               <Text fontSize={28}>書籤</Text>
             </Button>
-            <Button colorScheme="myButton">
+            <Button flex={1} colorScheme="myButton">
               <Icon
                 as={MaterialCommunityIcons}
                 name="dots-horizontal"

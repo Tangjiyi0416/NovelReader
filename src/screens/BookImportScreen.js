@@ -353,7 +353,7 @@ const SecondRoute = () => {
         <Button flex={1} mr={4}>
           <Text
             _light={{ color: "myColors.light30" }}
-            _dark={{ color: "myColors.dark30" }}
+            _dark={{ color: "myColors.light60" }}
           >
             簡轉繁
           </Text>
@@ -361,7 +361,7 @@ const SecondRoute = () => {
         <Button flex={1}>
           <Text
             _light={{ color: "myColors.light30" }}
-            _dark={{ color: "myColors.dark30" }}
+            _dark={{ color: "myColors.light60" }}
           >
             繁轉簡
           </Text>
@@ -381,7 +381,7 @@ const SecondRoute = () => {
         <Button flex={1} mr={4}>
           <Text
             _light={{ color: "myColors.light30" }}
-            _dark={{ color: "myColors.dark30" }}
+            _dark={{ color: "myColors.light60" }}
           >
             GBK to UTF-8
           </Text>
@@ -389,9 +389,8 @@ const SecondRoute = () => {
         <Button flex={1}>
           <Text
             _light={{ color: "myColors.light30" }}
-            _dark={{ color: "myColors.dark30" }}
+            _dark={{ color: "myColors.light60" }}
           >
-            {" "}
             Big5 to UTF-8
           </Text>
         </Button>
