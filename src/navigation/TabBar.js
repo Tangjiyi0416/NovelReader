@@ -44,7 +44,10 @@ const BookImportScreenWrapper = ({ navigation }) => {
       e.preventDefault();
       // Do something manually
       // ...
-      DocumentPicker.getDocumentAsync({ type: "text/plain" })
+      DocumentPicker.getDocumentAsync({
+        copyToCacheDirectory: false,
+        type: "text/plain",
+      })
         .then((result) => {
           if (result.type == "success")
             navigation.navigate("BookImport", { documentResult: result });

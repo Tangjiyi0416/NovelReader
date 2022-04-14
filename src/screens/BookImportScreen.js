@@ -28,7 +28,7 @@ const FirstRoute = () => {
   const route = useRoute();
   const { bookData } = useSelector((state) => state.bookData);
   const dispatch = useDispatch();
-  const bookName = route.params.documentResult.name;
+  const bookName = route.params.documentResult.name.slice(0, -4);
   React.useEffect(() => {
     dispatch(
       setBookData({
@@ -36,9 +36,11 @@ const FirstRoute = () => {
         author: "",
         desc: "",
         tags: [],
-        cover: "",
+        cover:
+          "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
         chapterDisplay: {},
         uri: route.params.documentResult.uri,
+        indexing: null,
       })
     );
   }, []);
@@ -87,6 +89,7 @@ const FirstRoute = () => {
             <Text fontSize={20}>書名</Text>
           </FormControl.Label>
           <Input
+            key="書名"
             fontSize={16}
             mb={6}
             variant="underlined"
@@ -104,6 +107,7 @@ const FirstRoute = () => {
           <Text fontSize={20}>作者</Text>
         </FormControl.Label>
         <Input
+          key="作者"
           fontSize={16}
           mb={6}
           variant="underlined"
@@ -119,6 +123,7 @@ const FirstRoute = () => {
           <Text fontSize={20}>簡述</Text>
         </FormControl.Label>
         <Input
+          key="簡述"
           fontSize={16}
           mb={6}
           variant="underlined"
@@ -134,9 +139,11 @@ const FirstRoute = () => {
           <Text fontSize={20}>標籤</Text>
         </FormControl.Label>
         <Select
+          key="標籤"
           variant="underlined"
           fontSize={16}
-          selectedValue={(value) => {
+          selectedValue={bookData.tags[0]}
+          onValueChange={(value) => {
             dispatch(setBookData({ tags: [value] }));
           }}
           accessibilityLabel="Choose a Tag"
@@ -145,10 +152,6 @@ const FirstRoute = () => {
           _dark={{ borderColor: "myColors.darkText" }}
           _selectedItem={{
             bg: colorMode === "light" ? "primary.500" : "darkPrimary.500",
-            tintColor:
-              colorMode === "light"
-                ? "myColors.lightText"
-                : "myColors.darkText",
           }}
           mt={1}
         >
@@ -163,7 +166,239 @@ const FirstRoute = () => {
   );
 };
 
-const SecondRoute = () => <ScrollView flex={1}></ScrollView>;
+const SecondRoute = () => {
+  const { colorMode } = useColorMode();
+  const { bookData } = useSelector((state) => state.bookData);
+  const dispatch = useDispatch();
+  return (
+    <ScrollView flex={1}>
+      <Text fontSize={24}>目錄檢測與顯示</Text>
+      <VStack
+        p={4}
+        width={"98%"}
+        my={5}
+        borderRadius={6}
+        shadow={3}
+        _light={{ bgColor: "myColors.lightCard" }}
+        _dark={{ bgColor: "myColors.darkCard" }}
+      >
+        <FormControl.Label m={0}>
+          <Text fontSize={20}>目錄辨識方法</Text>
+        </FormControl.Label>
+        <Select
+          key="目錄辨識方法"
+          variant="underlined"
+          fontSize={16}
+          selectedValue={bookData.indexing}
+          onValueChange={(value) => {
+            dispatch(setBookData({ indexing: value }));
+          }}
+          accessibilityLabel="Indexing method"
+          placeholder="Choose a Method"
+          _light={{ borderColor: "myColors.lightText" }}
+          _dark={{ borderColor: "myColors.darkText" }}
+          _selectedItem={{
+            bg: colorMode === "light" ? "primary.500" : "darkPrimary.500",
+          }}
+          mt={1}
+        >
+          <Select.Item label="簡單縮排辨識法" value="1" />
+          <Select.Item label="辨識法2" value="2" />
+          <Select.Item label="辨識法3" value="3" />
+          <Select.Item label="辨識法4" value="4" />
+          <Select.Item label="辨識法5" value="5" />
+        </Select>
+        <FormControl.Label m={0}>
+          <Text fontSize={20}>一級目錄顯示格式</Text>
+        </FormControl.Label>
+        <Select
+          key="一級目錄顯示格式"
+          variant="underlined"
+          fontSize={16}
+          // selectedValue={bookData.chapterDisplay?.chapter}
+          onValueChange={(value) => {
+            // console.warn(value);
+            let data = {};
+            switch (value) {
+              case "第一部":
+                data = {
+                  pre: "第",
+                  mode: "一",
+                  suf: "部",
+                };
+                break;
+              case "第1部":
+                data = {
+                  pre: "第",
+                  mode: "1",
+                  suf: "部",
+                };
+                break;
+              case "part 1":
+                data = {
+                  pre: "part ",
+                  mode: "1",
+                };
+                break;
+              case "chapter 1":
+                data = {
+                  pre: "charpter ",
+                  mode: "1",
+                };
+                break;
+              default:
+                break;
+            }
+            dispatch(
+              setBookData({
+                chapterDisplay: { ...bookData.chapterDisplay, chapter: data },
+              })
+            );
+          }}
+          accessibilityLabel="Indexing method"
+          placeholder="Choose a Method"
+          _light={{ borderColor: "myColors.lightText" }}
+          _dark={{ borderColor: "myColors.darkText" }}
+          _selectedItem={{
+            bg: colorMode === "light" ? "primary.500" : "darkPrimary.500",
+          }}
+          mt={1}
+        >
+          <Select.Item label="第一部、第二部" value="第一部" />
+          <Select.Item label="第1部、第2部" value="第1部" />
+          <Select.Item label="part 1、part 2" value="part 1" />
+          <Select.Item label="chapter 1、chapter 2" value="chapter 1" />
+        </Select>
+        <FormControl.Label m={0}>
+          <Text fontSize={20}>二級目錄顯示格式</Text>
+        </FormControl.Label>
+        <Select
+          key="二級目錄顯示格式"
+          variant="underlined"
+          fontSize={16}
+          onValueChange={(value) => {
+            // console.warn(value);
+            let data = {};
+            switch (value) {
+              case "第一章":
+                data = {
+                  pre: "第",
+                  mode: "一",
+                  suf: "章",
+                };
+                break;
+              case "第1章":
+                data = {
+                  pre: "第",
+                  mode: "1",
+                  suf: "章",
+                };
+                break;
+              case "section 1":
+                data = {
+                  pre: "section ",
+                  mode: "1",
+                };
+                break;
+              case "第一回":
+                data = {
+                  pre: "第",
+                  mode: "1",
+                  suf: "回",
+                };
+                break;
+              case "第1回":
+                data = {
+                  pre: "第",
+                  mode: "1",
+                  suf: "回",
+                };
+                break;
+              default:
+                break;
+            }
+            dispatch(
+              setBookData({
+                chapterDisplay: { ...bookData.chapterDisplay, section: data },
+              })
+            );
+          }}
+          accessibilityLabel="Indexing method"
+          placeholder="Choose a Method"
+          _light={{ borderColor: "myColors.lightText" }}
+          _dark={{ borderColor: "myColors.darkText" }}
+          _selectedItem={{
+            bg: colorMode === "light" ? "primary.500" : "darkPrimary.500",
+          }}
+          mt={1}
+        >
+          <Select.Item label="第一章、第二章" value="第一章" />
+          <Select.Item label="第1章、第2章" value="第1章" />
+          <Select.Item label="section 1、section 2" value="section 1" />
+          <Select.Item label="第一回、第二回" value="第一回" />
+          <Select.Item label="第1回、第2回" value="第1回" />
+        </Select>
+      </VStack>
+      <Text fontSize={24}>快速簡繁切換</Text>
+      <HStack
+        p={4}
+        width={"98%"}
+        my={5}
+        borderRadius={6}
+        justifyContent="space-between"
+        shadow={3}
+        _light={{ bgColor: "myColors.lightCard" }}
+        _dark={{ bgColor: "myColors.darkCard" }}
+      >
+        <Button flex={1} mr={4}>
+          <Text
+            _light={{ color: "myColors.light30" }}
+            _dark={{ color: "myColors.dark30" }}
+          >
+            簡轉繁
+          </Text>
+        </Button>
+        <Button flex={1}>
+          <Text
+            _light={{ color: "myColors.light30" }}
+            _dark={{ color: "myColors.dark30" }}
+          >
+            繁轉簡
+          </Text>
+        </Button>
+      </HStack>
+      <Text fontSize={24}>快速編碼切換</Text>
+      <HStack
+        p={4}
+        width={"98%"}
+        my={5}
+        borderRadius={6}
+        justifyContent="space-between"
+        shadow={3}
+        _light={{ bgColor: "myColors.lightCard" }}
+        _dark={{ bgColor: "myColors.darkCard" }}
+      >
+        <Button flex={1} mr={4}>
+          <Text
+            _light={{ color: "myColors.light30" }}
+            _dark={{ color: "myColors.dark30" }}
+          >
+            GBK to UTF-8
+          </Text>
+        </Button>
+        <Button flex={1}>
+          <Text
+            _light={{ color: "myColors.light30" }}
+            _dark={{ color: "myColors.dark30" }}
+          >
+            {" "}
+            Big5 to UTF-8
+          </Text>
+        </Button>
+      </HStack>
+    </ScrollView>
+  );
+};
 const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
@@ -195,30 +430,53 @@ export default function BookImportScreen({ navigation }) {
       }}
     />
   );
-
   function saveBook({ bookData }) {
-    const path = FileSystem.documentDirectory + "books.json";
-
+    const path = FileSystem.documentDirectory;
+    // console.warn(path);
     let newData = {};
+    // console.warn(path + "books.jsoni");
 
-    FileSystem.readAsStringAsync(path)
+    FileSystem.readAsStringAsync(path + "books.json")
       .then((result) => {
         newData = JSON.parse(result);
       })
-      .then(() => {})
-      // .catch(() => {
-      //   console.warn("books.json not exited yet.");
-      // })
+      .catch(() => console.warn("no record yet."))
       .finally(() => {
-        newData[bookData.title] = { ...bookData };
+        FileSystem.getInfoAsync(newData[bookData.title]?.uri ?? "")
+          .then(() => {
+            newData[bookData.title] = { ...bookData };
 
-        const json = JSON.stringify(newData);
-        FileSystem.writeAsStringAsync(path, json).then(() => {
-          // console.warn("bookData saved.");
-          // console.warn(json);
-          navigation.goBack();
-        });
-        // .catch(() => console.warn("bookData faild to save."));
+            const json = JSON.stringify(newData);
+            FileSystem.writeAsStringAsync(path + "books.json", json).then(
+              () => {
+                // console.warn("bookData saved.");
+                console.warn("book exited");
+                // console.warn(json);
+
+                navigation.goBack();
+              }
+            );
+          })
+          .catch(() => {
+            FileSystem.copyAsync({
+              from: bookData.uri,
+              to: path + "books/" + bookData.title + ".txt",
+            }).then(() => {
+              bookData.uri = path + "books/" + bookData.title + ".txt";
+              newData[bookData.title] = { ...bookData };
+
+              const json = JSON.stringify(newData);
+              FileSystem.writeAsStringAsync(path + "books.json", json).then(
+                () => {
+                  // console.warn("bookData saved.");
+                  console.warn("book copid");
+                  console.warn(json);
+
+                  navigation.goBack();
+                }
+              );
+            });
+          });
       });
   }
   function SaveButton({ bookData }) {

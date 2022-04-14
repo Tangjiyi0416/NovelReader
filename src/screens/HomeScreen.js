@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -8,9 +8,29 @@ import {
   Text,
 } from "native-base";
 import BookButton from "../components/BookButton";
-import bookMap from "../test/books.json";
+import testBookMap from "../test/books.json";
 import testData from "../test/testData.json";
+import * as FileSystem from "expo-file-system";
+
 export default function HomeScreen({ navigation }) {
+  const path = FileSystem.documentDirectory;
+
+  const [bookMap, setBookMap] = useState(testBookMap);
+  const [data, setData] = useState(testData);
+  // console.warn(bookMap);
+  // console.warn(path + "books.jsonh");
+  React.useEffect(() => {
+    FileSystem.readAsStringAsync(path + "books.json")
+      .then((result) => {
+        bookMap = JSON.parse(result);
+      })
+      .catch(() => console.warn("no record yet."))
+      .finally(() => {
+        setData([...data, Object.keys(bookMap)]);
+        setBookMap({ ...bookMap, ...testBookMap });
+      });
+  }, []);
+
   const bookBig = (item) => (
     <BookButton
       mx={4}
@@ -58,6 +78,7 @@ export default function HomeScreen({ navigation }) {
       </Box>
     );
   };
+
   return (
     <Box
       flex={1}

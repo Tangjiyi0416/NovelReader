@@ -60,7 +60,7 @@ export default function BookButton({
               {bookData.progress?.chapter ? (
                 <Text mx={2} fontSize={20}>
                   {bookData.chapterDisplay?.chapter?.pre ?? null}
-                  {bookData.chapterDisplay.mode == "一"
+                  {bookData.chapterDisplay?.chapter?.mode == "一"
                     ? toWords(bookData.progress.chapter)
                     : bookData.progress.chapter}
                   {bookData.chapterDisplay?.chapter?.suf ?? null}
@@ -73,7 +73,7 @@ export default function BookButton({
               {bookData.progress?.section ? (
                 <Text mx={2} fontSize={20}>
                   {bookData.chapterDisplay?.section?.pre ?? null}
-                  {bookData.chapterDisplay.mode == "一"
+                  {bookData.chapterDisplay?.section?.mode == "一"
                     ? toWords(bookData.progress.section)
                     : bookData.progress.section}
                   {bookData.chapterDisplay?.section?.suf ?? null}

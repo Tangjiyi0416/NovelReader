@@ -6,6 +6,7 @@
         "tags": [
             "tag1"
         ],
+        "uri": "content://com.android.externalstorage.documents/document/primary%3ADownload%2F555.txt",
         "cover": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
         "progress": {
             "chapter": 1,
@@ -15,13 +16,14 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "一",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "一",
                 "suf": "章"
-            },
-            "mode": "一"
+            }
         }
     },
     "有趣小說書名": {
@@ -35,13 +37,14 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "一",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "一",
                 "suf": "章"
-            },
-            "mode": "一"
+            }
         }
     },
     "沒那麼有趣小說書名": {
@@ -55,13 +58,14 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "章"
-            },
-            "mode": "1"
+            }
         }
     },
     "Invention of All Time": {
@@ -75,13 +79,14 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "章"
-            },
-            "mode": "1"
+            }
         }
     },
     "Invention of All a": {
@@ -95,13 +100,14 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "章"
-            },
-            "mode": "1"
+            }
         }
     },
     "Invention of All b": {
@@ -115,13 +121,14 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "章"
-            },
-            "mode": "1"
+            }
         }
     },
     "Invention of All c": {
@@ -135,13 +142,14 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "章"
-            },
-            "mode": "1"
+            }
         }
     },
     "Invention of All d": {
@@ -155,13 +163,14 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "章"
-            },
-            "mode": "1"
+            }
         }
     },
     "5D Chess - Terminator’s Gambit": {
@@ -179,9 +188,9 @@
         },
         "chapterDisplay": {
             "chapter": {
+                "mode": "1",
                 "pre": "part "
-            },
-            "mode": "1"
+            }
         }
     },
     "書（一）": {
@@ -197,13 +206,14 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "節"
-            },
-            "mode": "1"
+            }
         }
     },
     "書（二）": {
@@ -219,13 +229,14 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "一",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "一",
                 "suf": "章"
-            },
-            "mode": "一"
+            }
         }
     },
     "書（三）": {
@@ -241,13 +252,15 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "章"
-            },
-            "mode": "1"
+            }
+
         }
     },
     "書（四）": {
@@ -263,13 +276,15 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "一",
                 "suf": "章"
             },
             "section": {
                 "pre": "第",
+                "mode": "一",
                 "suf": "回"
-            },
-            "mode": "一"
+            }
+
         }
     },
     "很厚的書": {
@@ -285,13 +300,14 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "章"
-            },
-            "mode": "1"
+            }
         }
     },
     "這邊還有一本": {
@@ -303,13 +319,15 @@
         "chapterDisplay": {
             "chapter": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "部"
             },
             "section": {
                 "pre": "第",
+                "mode": "1",
                 "suf": "章"
-            },
-            "mode": "1"
+            }
+
         }
     }
 }
