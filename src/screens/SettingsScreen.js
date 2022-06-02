@@ -7,9 +7,24 @@ import {
   ScrollView,
   VStack,
 } from "native-base";
+import * as FileSystem from "expo-file-system";
+import { useDispatch } from "react-redux";
+import { clearBookList } from "../redux/bookListSlice";
 
 export default function SettingsScreen() {
   const { toggleColorMode } = useColorMode();
+  const dispatch = useDispatch();
+  const ClearAllData = () => {
+    const path = FileSystem.documentDirectory;
+    FileSystem.deleteAsync(path + "books")
+      .then(() => {
+        console.warn("All data cleared.");
+        dispatch(clearBookList());
+      })
+      .catch(() => {
+        console.warn("No data to clear");
+      });
+  };
   return (
     <Box
       flex={1}
@@ -39,6 +54,14 @@ export default function SettingsScreen() {
               _dark={{ color: "myColors.light30" }}
             >
               Color Mode
+            </Text>
+          </Button>
+          <Button onPress={ClearAllData}>
+            <Text
+              _light={{ color: "myColors.light30" }}
+              _dark={{ color: "myColors.light30" }}
+            >
+              Clear all Data
             </Text>
           </Button>
         </VStack>

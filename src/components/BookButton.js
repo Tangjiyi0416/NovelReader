@@ -57,10 +57,10 @@ export default function BookButton({
               opacity={0.5}
               w="100%"
             >
-              {bookData.progress?.chapter ? (
+              {/* {bookData.progress?.chapter ? (
                 <Text mx={2} fontSize={20}>
                   {bookData.chapterDisplay?.chapter?.pre ?? null}
-                  {bookData.chapterDisplay?.chapter?.mode == "一"
+                  {bookData.chapterDisplay?.chapter?.num == "一"
                     ? toWords(bookData.progress.chapter)
                     : bookData.progress.chapter}
                   {bookData.chapterDisplay?.chapter?.suf ?? null}
@@ -73,12 +73,12 @@ export default function BookButton({
               {bookData.progress?.section ? (
                 <Text mx={2} fontSize={20}>
                   {bookData.chapterDisplay?.section?.pre ?? null}
-                  {bookData.chapterDisplay?.section?.mode == "一"
+                  {bookData.chapterDisplay?.section?.num == "一"
                     ? toWords(bookData.progress.section)
                     : bookData.progress.section}
                   {bookData.chapterDisplay?.section?.suf ?? null}
                 </Text>
-              ) : null}
+              ) : null} */}
             </Flex>
           </Flex>
         </Flex>

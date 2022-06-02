@@ -19,35 +19,25 @@ import TransButton from "../components/TransButton";
 import { SceneMap, TabView } from "react-native-tab-view";
 import { useWindowDimensions } from "react-native";
 import { TabBar } from "react-native-tab-view";
-import { useRoute } from "@react-navigation/native";
-import { connect, useDispatch, useSelector } from "react-redux";
-import { setBookData } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectBookImportData,
+  setBookData,
+} from "../redux/bookImportDataSlice";
+import { addBook } from "../redux/bookListSlice";
 
 const FirstRoute = () => {
   const { colorMode } = useColorMode();
-  const route = useRoute();
-  const { bookData } = useSelector((state) => state.bookData);
+
+  const bookData = useSelector(selectBookImportData);
   const dispatch = useDispatch();
-  const bookName = route.params.documentResult.name.slice(0, -4);
-  React.useEffect(() => {
-    dispatch(
-      setBookData({
-        title: bookName,
-        author: "",
-        desc: "",
-        tags: [],
-        cover:
-          "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
-        chapterDisplay: {},
-        uri: route.params.documentResult.uri,
-        indexing: null,
-      })
-    );
-  }, []);
-  return (
+  return bookData ? (
     <ScrollView
       flex={1}
-      contentContainerStyle={{ justifyContent: "center", alignItems: "center" }}
+      contentContainerStyle={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
       <Pressable my={4} alignSelf={"center"}>
         {({ isPressed }) => (
@@ -155,22 +145,22 @@ const FirstRoute = () => {
           }}
           mt={1}
         >
-          <Select.Item label="將來可自定義的標簽1" value="tag1" />
-          <Select.Item label="將來可自定義的標簽2" value="tag2" />
-          <Select.Item label="將來可自定義的標簽3" value="tag3" />
-          <Select.Item label="將來可自定義的標簽4" value="tag4" />
-          <Select.Item label="將來可自定義的標簽5" value="tag5" />
+          <Select.Item key={"s1"} label="將來可自定義的標簽1" value="tag1" />
+          <Select.Item key={"s2"} label="將來可自定義的標簽2" value="tag2" />
+          <Select.Item key={"s3"} label="將來可自定義的標簽3" value="tag3" />
+          <Select.Item key={"s4"} label="將來可自定義的標簽4" value="tag4" />
+          <Select.Item key={"s5"} label="將來可自定義的標簽5" value="tag5" />
         </Select>
       </VStack>
     </ScrollView>
-  );
+  ) : null;
 };
 
 const SecondRoute = () => {
   const { colorMode } = useColorMode();
-  const { bookData } = useSelector((state) => state.bookData);
+  const bookData = useSelector(selectBookImportData);
   const dispatch = useDispatch();
-  return (
+  return bookData ? (
     <ScrollView flex={1}>
       <Text fontSize={24}>目錄檢測與顯示</Text>
       <VStack
@@ -218,32 +208,32 @@ const SecondRoute = () => {
           // selectedValue={bookData.chapterDisplay?.chapter}
           onValueChange={(value) => {
             // console.warn(value);
-            let data = {};
+            let chapter = {};
             switch (value) {
               case "第一部":
-                data = {
+                chapter = {
                   pre: "第",
-                  mode: "一",
+                  num: "一",
                   suf: "部",
                 };
                 break;
               case "第1部":
-                data = {
+                chapter = {
                   pre: "第",
-                  mode: "1",
+                  num: "1",
                   suf: "部",
                 };
                 break;
               case "part 1":
-                data = {
+                chapter = {
                   pre: "part ",
-                  mode: "1",
+                  num: "1",
                 };
                 break;
               case "chapter 1":
-                data = {
+                chapter = {
                   pre: "charpter ",
-                  mode: "1",
+                  num: "1",
                 };
                 break;
               default:
@@ -251,7 +241,7 @@ const SecondRoute = () => {
             }
             dispatch(
               setBookData({
-                chapterDisplay: { ...bookData.chapterDisplay, chapter: data },
+                chapterDisplay: { ...chapter },
               })
             );
           }}
@@ -278,39 +268,39 @@ const SecondRoute = () => {
           fontSize={16}
           onValueChange={(value) => {
             // console.warn(value);
-            let data = {};
+            let section = {};
             switch (value) {
               case "第一章":
-                data = {
+                section = {
                   pre: "第",
-                  mode: "一",
+                  num: "一",
                   suf: "章",
                 };
                 break;
               case "第1章":
-                data = {
+                section = {
                   pre: "第",
-                  mode: "1",
+                  num: "1",
                   suf: "章",
                 };
                 break;
               case "section 1":
-                data = {
+                section = {
                   pre: "section ",
-                  mode: "1",
+                  num: "1",
                 };
                 break;
               case "第一回":
-                data = {
+                section = {
                   pre: "第",
-                  mode: "1",
+                  num: "1",
                   suf: "回",
                 };
                 break;
               case "第1回":
-                data = {
+                section = {
                   pre: "第",
-                  mode: "1",
+                  num: "1",
                   suf: "回",
                 };
                 break;
@@ -319,7 +309,7 @@ const SecondRoute = () => {
             }
             dispatch(
               setBookData({
-                chapterDisplay: { ...bookData.chapterDisplay, section: data },
+                sectionDisplay: { ...section },
               })
             );
           }}
@@ -332,11 +322,15 @@ const SecondRoute = () => {
           }}
           mt={1}
         >
-          <Select.Item label="第一章、第二章" value="第一章" />
-          <Select.Item label="第1章、第2章" value="第1章" />
-          <Select.Item label="section 1、section 2" value="section 1" />
-          <Select.Item label="第一回、第二回" value="第一回" />
-          <Select.Item label="第1回、第2回" value="第1回" />
+          <Select.Item key={"s1"} label="第一章、第二章" value="第一章" />
+          <Select.Item key={"s2"} label="第1章、第2章" value="第1章" />
+          <Select.Item
+            key={"s3"}
+            label="section 1、section 2"
+            value="section 1"
+          />
+          <Select.Item key={"s4"} label="第一回、第二回" value="第一回" />
+          <Select.Item key={"s5"} label="第1回、第2回" value="第1回" />
         </Select>
       </VStack>
       <Text fontSize={24}>快速簡繁切換</Text>
@@ -396,22 +390,22 @@ const SecondRoute = () => {
         </Button>
       </HStack>
     </ScrollView>
-  );
+  ) : null;
 };
 const renderScene = SceneMap({
   first: FirstRoute,
   second: SecondRoute,
 });
 
-export default function BookImportScreen({ navigation }) {
+export default function BookImportScreen({ navigation, route }) {
   const { colorMode } = useColorMode();
   const layout = useWindowDimensions();
-
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "first", title: "詳細資料" },
     { key: "second", title: "導入設定" },
   ]);
+  const dispatch = useDispatch();
   const renderTabBar = (props) => (
     <TabBar
       {...props}
@@ -429,56 +423,36 @@ export default function BookImportScreen({ navigation }) {
       }}
     />
   );
-  function saveBook({ bookData }) {
-    const path = FileSystem.documentDirectory;
-    // console.warn(path);
-    let newData = {};
-    // console.warn(path + "books.jsoni");
 
-    FileSystem.readAsStringAsync(path + "books.json")
-      .then((result) => {
-        newData = JSON.parse(result);
-      })
-      .catch(() => console.warn("no record yet."))
-      .finally(() => {
-        FileSystem.getInfoAsync(newData[bookData.title]?.uri ?? "")
+  function SaveButton() {
+    const bookData = useSelector(selectBookImportData);
+    function saveBook() {
+      const path = FileSystem.documentDirectory + "books/";
+      FileSystem.deleteAsync(path + bookData.title + ".txt", {
+        idempotent: true,
+      }).then(() => {
+        FileSystem.copyAsync({
+          from: bookData.uri,
+          to: path,
+        })
           .then(() => {
-            newData[bookData.title] = { ...bookData };
-
-            const json = JSON.stringify(newData);
-            FileSystem.writeAsStringAsync(path + "books.json", json).then(
-              () => {
-                // console.warn("bookData saved.");
-                console.warn("book exited");
-                // console.warn(json);
-
-                navigation.goBack();
-              }
-            );
+            console.warn("book copied successed, info updated.");
           })
           .catch(() => {
-            FileSystem.copyAsync({
-              from: bookData.uri,
-              to: path + "books/" + bookData.title + ".txt",
-            }).then(() => {
-              bookData.uri = path + "books/" + bookData.title + ".txt";
-              newData[bookData.title] = { ...bookData };
-
-              const json = JSON.stringify(newData);
-              FileSystem.writeAsStringAsync(path + "books.json", json).then(
-                () => {
-                  // console.warn("bookData saved.");
-                  console.warn("book copid");
-                  console.warn(json);
-
-                  navigation.goBack();
-                }
-              );
-            });
+            console.warn("book exited, info updated.");
+          })
+          .finally(() => {
+            dispatch(
+              addBook({
+                ...bookData,
+                uri: path + bookData.title + ".txt",
+              })
+            );
+            console.warn("book exited, info updated.");
+            navigation.goBack();
           });
       });
-  }
-  function SaveButton({ bookData }) {
+    }
     return (
       <Button
         borderRadius={50}
@@ -487,7 +461,7 @@ export default function BookImportScreen({ navigation }) {
         mr={4}
         _light={{ colorScheme: "primary" }}
         _dark={{ colorScheme: "darkPrimary" }}
-        onPress={() => saveBook(bookData)}
+        onPress={saveBook}
       >
         <Text
           mx={1}
@@ -500,9 +474,6 @@ export default function BookImportScreen({ navigation }) {
       </Button>
     );
   }
-  const SaveButtonRedux = connect((state) => ({ bookData: state.bookData }))(
-    SaveButton
-  );
   const myHeader = ({ navigation }) => (
     <HStack
       pt={1}
@@ -520,7 +491,7 @@ export default function BookImportScreen({ navigation }) {
           導入書本
         </Text>
       </HStack>
-      <SaveButtonRedux />
+      <SaveButton />
     </HStack>
   );
   React.useEffect(() => {
@@ -529,8 +500,20 @@ export default function BookImportScreen({ navigation }) {
       header: myHeader,
       headerShown: true,
     });
+    dispatch(
+      setBookData({
+        title: route.params.documentResult.name.slice(0, -4),
+        author: "",
+        desc: "",
+        tags: [],
+        cover:
+          "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+        chapterDisplay: {},
+        uri: route.params.documentResult.uri,
+        indexing: null,
+      })
+    );
   }, []);
-
   return (
     <Box
       flex={1}
