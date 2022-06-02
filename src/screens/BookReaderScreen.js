@@ -8,18 +8,126 @@ import {
   Icon,
   Pressable,
   ScrollView,
+  Slider,
   Spacer,
   Text,
   useToast,
+  VStack,
 } from "native-base";
 import ActiveButton from "../components/ActiveButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
+import TransButton from "../components/TransButton";
 
 export default function BookReaderScreen({ route, navigation }) {
   const toast = useToast();
   const [content, setContent] = useState("");
   const [showOverlay, setOverlay] = useState(false);
+  const [overlayMenuIndex, setOverlayMenuIndex] = useState(0);
+  const [pdx, setPdx] = useState(16);
+  const OverlayMenu = () => {
+    switch (overlayMenuIndex) {
+      case 0:
+        return null;
+      case 1:
+        return null;
+      case 2:
+        return (
+          <VStack
+            w="3/4"
+            _light={{ bgColor: "myColors.light30" }}
+            _dark={{ bgColor: "myColors.dark30" }}
+          >
+            <Text fontSize={20} mt={3}>
+              Padding (左右)
+            </Text>
+            <HStack justifyContent={"space-between"} alignItems="center">
+              <ActiveButton
+                w={8}
+                h={8}
+                onPress={() => {
+                  setPdx(pdx + 5);
+                }}
+                name="plus"
+              />
+              <Text fontSize={26}>{pdx}</Text>
+              <ActiveButton
+                w={8}
+                h={8}
+                onPress={() => {
+                  setPdx(pdx - 5);
+                }}
+                name="minus"
+              />
+            </HStack>
+            {/* <Slider
+              defaultValue={4}
+              minValue={0}
+              maxValue={16}
+              accessibilityLabel="hello world"
+              step={1}
+              onChangeEnd={(v) => {
+                v && setPdx(v);
+              }}
+            >
+              <Slider.Track>
+                <Slider.FilledTrack />
+              </Slider.Track>
+              <Slider.Thumb />
+            </Slider>
+            <Divider
+              mt={4}
+              _light={{ bg: "myColors.light30" }}
+              _dark={{ bg: "myColors.dark30" }}
+            /> */}
+            <Text fontSize={20}>Padding (上下)</Text>
+            <HStack justifyContent={"space-between"} alignItems="center">
+              <ActiveButton
+                w={8}
+                h={8}
+                onPress={() => {
+                  setPdx(pdx + 5);
+                }}
+                name="plus"
+              />
+              <Text fontSize={26}>{pdx}</Text>
+              <ActiveButton
+                w={8}
+                h={8}
+                onPress={() => {
+                  setPdx(pdx - 5);
+                }}
+                name="minus"
+              />
+            </HStack>
+            {/* <Slider
+              defaultValue={4}
+              minValue={0}
+              maxValue={16}
+              accessibilityLabel="hello world"
+              step={1}
+            >
+              <Slider.Track>
+                <Slider.FilledTrack />
+              </Slider.Track>
+              <Slider.Thumb />
+            </Slider> */}
+            <Divider
+              mt={4}
+              _light={{ bg: "myColors.light30" }}
+              _dark={{ bg: "myColors.dark30" }}
+            />
+          </VStack>
+        );
+      case 3:
+        return null;
+      case 4:
+        return null;
+      case 5:
+        return null;
+    }
+  };
+
   React.useEffect(() => {
     FileSystem.readAsStringAsync(route.params.book.uri)
       .then((result) => setContent(result))
@@ -42,8 +150,13 @@ export default function BookReaderScreen({ route, navigation }) {
       _dark={{ bg: "myColors.dark60" }}
     >
       <Box flex={1} alignItems="center">
-        <ScrollView px={4}>
-          <Pressable onPress={() => setOverlay(!showOverlay)}>
+        <ScrollView px={`${pdx}px`}>
+          <Pressable
+            onPress={() => {
+              setOverlay(!showOverlay);
+              setOverlayMenuIndex(0);
+            }}
+          >
             <Divider
               mt={4}
               _light={{ bg: "myColors.light60" }}
@@ -70,35 +183,61 @@ export default function BookReaderScreen({ route, navigation }) {
           />
         ) : null}
         {showOverlay ? (
-          <HStack
-            width="100%"
-            justifyContent="space-between"
-            px={2}
-            bottom={0}
-            position="absolute"
-            _light={{ bg: "myColors.light30" }}
-            _dark={{ bg: "myColors.dark30" }}
-          >
-            <Button flex={1} colorScheme="myButton">
-              <Text fontSize={28}>目錄</Text>
-            </Button>
-            <Button flex={1} colorScheme="myButton">
-              <Text fontSize={28}>版面</Text>
-            </Button>
-            <Button flex={1} colorScheme="myButton">
-              <Text fontSize={28}>顏色</Text>
-            </Button>
-            <Button flex={1} colorScheme="myButton">
-              <Text fontSize={28}>書籤</Text>
-            </Button>
-            <Button flex={1} colorScheme="myButton">
-              <Icon
-                as={MaterialCommunityIcons}
-                name="dots-horizontal"
-                size={12}
-              />
-            </Button>
-          </HStack>
+          <VStack bottom={0} position="absolute" width="100%">
+            <HStack
+              justifyContent="center"
+              px={2}
+              _light={{ bg: "myColors.light30" }}
+              _dark={{ bg: "myColors.dark30" }}
+            >
+              <OverlayMenu />
+            </HStack>
+            <HStack
+              px={2}
+              _light={{ bg: "myColors.light30" }}
+              _dark={{ bg: "myColors.dark30" }}
+            >
+              <Button
+                flex={1}
+                onPress={() => setOverlayMenuIndex(1)}
+                colorScheme="myButton"
+              >
+                <Text fontSize={28}>目錄</Text>
+              </Button>
+              <Button
+                flex={1}
+                onPress={() => setOverlayMenuIndex(2)}
+                colorScheme="myButton"
+              >
+                <Text fontSize={28}>版面</Text>
+              </Button>
+              <Button
+                flex={1}
+                onPress={() => setOverlayMenuIndex(3)}
+                colorScheme="myButton"
+              >
+                <Text fontSize={28}>顏色</Text>
+              </Button>
+              <Button
+                flex={1}
+                onPress={() => setOverlayMenuIndex(4)}
+                colorScheme="myButton"
+              >
+                <Text fontSize={28}>書籤</Text>
+              </Button>
+              <Button
+                flex={1}
+                onPress={() => setOverlayMenuIndex(5)}
+                colorScheme="myButton"
+              >
+                <Icon
+                  as={MaterialCommunityIcons}
+                  name="dots-horizontal"
+                  size={12}
+                />
+              </Button>
+            </HStack>
+          </VStack>
         ) : null}
       </Box>
     </Box>

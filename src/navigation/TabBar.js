@@ -10,7 +10,6 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import * as DocumentPicker from "expo-document-picker";
-
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const TabNav = createBottomTabNavigator();
 
