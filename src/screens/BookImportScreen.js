@@ -201,137 +201,129 @@ const SecondRoute = () => {
         <FormControl.Label m={0}>
           <Text fontSize={20}>一級目錄顯示格式</Text>
         </FormControl.Label>
-        <Select
-          key="一級目錄顯示格式"
-          variant="underlined"
-          fontSize={16}
-          // selectedValue={bookData.chapterDisplay?.chapter}
-          onValueChange={(value) => {
-            // console.warn(value);
-            let chapter = {};
-            switch (value) {
-              case "第一部":
-                chapter = {
-                  pre: "第",
-                  num: "一",
-                  suf: "部",
-                };
-                break;
-              case "第1部":
-                chapter = {
-                  pre: "第",
-                  num: "1",
-                  suf: "部",
-                };
-                break;
-              case "part 1":
-                chapter = {
-                  pre: "part ",
-                  num: "1",
-                };
-                break;
-              case "chapter 1":
-                chapter = {
-                  pre: "charpter ",
-                  num: "1",
-                };
-                break;
-              default:
-                break;
-            }
-            dispatch(
-              setBookData({
-                chapterDisplay: { ...chapter },
-              })
-            );
-          }}
-          accessibilityLabel="Indexing method"
-          placeholder="Choose a Method"
-          _light={{ borderColor: "myColors.lightText" }}
-          _dark={{ borderColor: "myColors.darkText" }}
-          _selectedItem={{
-            bg: colorMode === "light" ? "primary.500" : "darkPrimary.500",
-          }}
-          mt={1}
-        >
-          <Select.Item label="第一部、第二部" value="第一部" />
-          <Select.Item label="第1部、第2部" value="第1部" />
-          <Select.Item label="part 1、part 2" value="part 1" />
-          <Select.Item label="chapter 1、chapter 2" value="chapter 1" />
-        </Select>
+        <HStack>
+          <FormControl.Label m={0}>
+            <Text fontSize={12}>前綴</Text>
+          </FormControl.Label>
+          <Input
+            value={bookData?.chapterDisplay?.pre}
+            flex={1}
+            placeholder={"第"}
+            onChangeText={(value) => {
+              dispatch(
+                setBookData({
+                  chapterDisplay: { ...bookData?.chapterDisplay, pre: value },
+                })
+              );
+            }}
+          />
+          <FormControl.Label m={0}>
+            <Text fontSize={12}>數</Text>
+          </FormControl.Label>
+          <Select
+            flex={1}
+            key="chpaterNum"
+            variant="underlined"
+            fontSize={16}
+            selectedValue={bookData?.chapterDisplay?.num}
+            onValueChange={(value) => {
+              dispatch(
+                setBookData({
+                  chapterDisplay: { ...bookData?.chapterDisplay, num: value },
+                })
+              );
+            }}
+            accessibilityLabel="chapter num"
+            placeholder="一"
+            _light={{ borderColor: "myColors.lightText" }}
+            _dark={{ borderColor: "myColors.darkText" }}
+            _selectedItem={{
+              bg: colorMode === "light" ? "primary.500" : "darkPrimary.500",
+            }}
+            mt={1}
+          >
+            <Select.Item label="一" value="一" />
+            <Select.Item label="1" value="1" />
+          </Select>
+          <FormControl.Label m={0}>
+            <Text fontSize={12}>後綴</Text>
+          </FormControl.Label>
+          <Input
+            value={bookData?.chapterDisplay?.suf}
+            flex={1}
+            placeholder={"卷"}
+            onChangeText={(value) => {
+              dispatch(
+                setBookData({
+                  chapterDisplay: { ...bookData?.chapterDisplay, suf: value },
+                })
+              );
+            }}
+          />
+        </HStack>
         <FormControl.Label m={0}>
           <Text fontSize={20}>二級目錄顯示格式</Text>
         </FormControl.Label>
-        <Select
-          key="二級目錄顯示格式"
-          variant="underlined"
-          fontSize={16}
-          onValueChange={(value) => {
-            // console.warn(value);
-            let section = {};
-            switch (value) {
-              case "第一章":
-                section = {
-                  pre: "第",
-                  num: "一",
-                  suf: "章",
-                };
-                break;
-              case "第1章":
-                section = {
-                  pre: "第",
-                  num: "1",
-                  suf: "章",
-                };
-                break;
-              case "section 1":
-                section = {
-                  pre: "section ",
-                  num: "1",
-                };
-                break;
-              case "第一回":
-                section = {
-                  pre: "第",
-                  num: "1",
-                  suf: "回",
-                };
-                break;
-              case "第1回":
-                section = {
-                  pre: "第",
-                  num: "1",
-                  suf: "回",
-                };
-                break;
-              default:
-                break;
-            }
-            dispatch(
-              setBookData({
-                sectionDisplay: { ...section },
-              })
-            );
-          }}
-          accessibilityLabel="Indexing method"
-          placeholder="Choose a Method"
-          _light={{ borderColor: "myColors.lightText" }}
-          _dark={{ borderColor: "myColors.darkText" }}
-          _selectedItem={{
-            bg: colorMode === "light" ? "primary.500" : "darkPrimary.500",
-          }}
-          mt={1}
-        >
-          <Select.Item key={"s1"} label="第一章、第二章" value="第一章" />
-          <Select.Item key={"s2"} label="第1章、第2章" value="第1章" />
-          <Select.Item
-            key={"s3"}
-            label="section 1、section 2"
-            value="section 1"
+        <HStack>
+          <FormControl.Label m={0}>
+            <Text fontSize={12}>前綴</Text>
+          </FormControl.Label>
+          <Input
+            value={bookData?.sectionDisplay?.pre}
+            flex={1}
+            placeholder={"第"}
+            onChangeText={(value) => {
+              dispatch(
+                setBookData({
+                  sectionDisplay: { ...bookData?.sectionDisplay, pre: value },
+                })
+              );
+            }}
           />
-          <Select.Item key={"s4"} label="第一回、第二回" value="第一回" />
-          <Select.Item key={"s5"} label="第1回、第2回" value="第1回" />
-        </Select>
+          <FormControl.Label m={0}>
+            <Text fontSize={12}>數</Text>
+          </FormControl.Label>
+          <Select
+            flex={1}
+            key="chpaterNum"
+            variant="underlined"
+            fontSize={16}
+            selectedValue={bookData?.sectionDisplay?.num}
+            onValueChange={(value) => {
+              dispatch(
+                setBookData({
+                  sectionDisplay: { ...bookData?.sectionDisplay, num: value },
+                })
+              );
+            }}
+            accessibilityLabel="chapter num"
+            placeholder="一"
+            _light={{ borderColor: "myColors.lightText" }}
+            _dark={{ borderColor: "myColors.darkText" }}
+            _selectedItem={{
+              bg: colorMode === "light" ? "primary.500" : "darkPrimary.500",
+            }}
+            mt={1}
+          >
+            <Select.Item label="一" value="一" />
+            <Select.Item label="1" value="1" />
+          </Select>
+          <FormControl.Label m={0}>
+            <Text fontSize={12}>後綴</Text>
+          </FormControl.Label>
+          <Input
+            flex={1}
+            value={bookData?.sectionDisplay?.suf}
+            placeholder={"章"}
+            onChangeText={(value) => {
+              dispatch(
+                setBookData({
+                  sectionDisplay: { ...bookData?.sectionDisplay, suf: value },
+                })
+              );
+            }}
+          />
+        </HStack>
       </VStack>
       <Text fontSize={24}>快速簡繁切換</Text>
       <HStack
@@ -436,10 +428,10 @@ export default function BookImportScreen({ navigation, route }) {
           to: path,
         })
           .then(() => {
-            console.warn("book copied successed, info updated.");
+            console.warn("book copied successed.");
           })
           .catch(() => {
-            console.warn("book exited, info updated.");
+            console.warn("book exited.");
           })
           .finally(() => {
             dispatch(
@@ -448,7 +440,13 @@ export default function BookImportScreen({ navigation, route }) {
                 uri: path + bookData.title + ".txt",
               })
             );
-            console.warn("book exited, info updated.");
+            // FileSystem.readAsStringAsync(path + bookData.title + ".txt").then(
+            //   (value) => {
+            //     const lines = value.split("\n").length;
+            //     console.warn(lines);
+            //   }
+            // );
+            console.warn("info updated.");
             navigation.goBack();
           });
       });

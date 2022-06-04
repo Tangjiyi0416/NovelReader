@@ -6,12 +6,13 @@
         "tags": [
             "tag1"
         ],
-        "uri": "file:///data/user/0/host.exp.exponent/files/ExperienceData/%2540ntuedtdapp2022%252FNovelReader/books/555.txt",
+        "uri": "file:///data/user/0/host.exp.exponent/files/ExperienceData/%2540ntuedtdapp2022%252FNovelReader/books/《一世之尊》（精校版全本）作者：愛潛水的烏賊.txt",
         "cover": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
         "progress": {
             "chapter": 1,
-            "section": 3,
-            "line": 12
+            "section": 1,
+            "line": 12,
+            "actualLine": 12
         },
         "chapterDisplay": {
             "pre": "第",
@@ -33,17 +34,16 @@
         ],
         "cover": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
         "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "一",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "一",
-                "suf": "章"
-            }
+            "pre": "第",
+            "num": "一",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "一",
+            "suf": "章"
         }
+
     },
     "沒那麼有趣小說書名": {
         "title": "沒那麼有趣小說書名",
@@ -54,17 +54,16 @@
         ],
         "cover": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
         "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "1",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "1",
-                "suf": "章"
-            }
+            "pre": "第",
+            "num": "1",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "1",
+            "suf": "章"
         }
+
     },
     "Invention of All Time": {
         "title": "Invention of All Time",
@@ -74,18 +73,18 @@
             "tag2"
         ],
         "cover": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+
         "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "1",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "1",
-                "suf": "章"
-            }
+            "pre": "第",
+            "num": "1",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "1",
+            "suf": "章"
         }
+
     },
     "Invention of All a": {
         "title": "Invention of All a",
@@ -95,18 +94,18 @@
             "tag2"
         ],
         "cover": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+
         "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "1",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "1",
-                "suf": "章"
-            }
+            "pre": "第",
+            "num": "1",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "1",
+            "suf": "章"
         }
+
     },
     "Invention of All b": {
         "title": "Invention of All b",
@@ -116,18 +115,18 @@
             "tag2"
         ],
         "cover": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+
         "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "1",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "1",
-                "suf": "章"
-            }
+            "pre": "第",
+            "num": "1",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "1",
+            "suf": "章"
         }
+
     },
     "Invention of All c": {
         "title": "Invention of All c",
@@ -137,18 +136,18 @@
             "tag2"
         ],
         "cover": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+
         "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "1",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "1",
-                "suf": "章"
-            }
+            "pre": "第",
+            "num": "1",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "1",
+            "suf": "章"
         }
+
     },
     "Invention of All d": {
         "title": "Invention of All d",
@@ -158,18 +157,18 @@
             "tag2"
         ],
         "cover": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+
         "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "1",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "1",
-                "suf": "章"
-            }
+            "pre": "第",
+            "num": "1",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "1",
+            "suf": "章"
         }
+
     },
     "5D Chess - Terminator’s Gambit": {
         "title": "5D Chess - Terminator’s Gambit",
@@ -184,11 +183,11 @@
             "chapter": 1,
             "line": 1
         },
+
         "chapterDisplay": {
-            "chapter": {
-                "num": "1",
-                "pre": "part "
-            }
+            "num": "1",
+            "pre": "part "
+
         }
     },
     "書（一）": {
@@ -201,18 +200,18 @@
             "chapter": 1,
             "line": 1
         },
+
         "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "1",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "1",
-                "suf": "節"
-            }
+            "pre": "第",
+            "num": "1",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "1",
+            "suf": "節"
         }
+
     },
     "書（二）": {
         "title": "書（二）",
@@ -224,18 +223,18 @@
             "chapter": 1,
             "section": 1
         },
+
         "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "一",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "一",
-                "suf": "章"
-            }
+            "pre": "第",
+            "num": "一",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "一",
+            "suf": "章"
         }
+
     },
     "書（三）": {
         "title": "書（三）",
@@ -247,17 +246,17 @@
             "chapter": 1,
             "section": 1
         },
+
         "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "1",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "1",
-                "suf": "章"
-            }
+            "pre": "第",
+            "num": "1",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "1",
+            "suf": "章"
+
 
         }
     },
@@ -271,19 +270,19 @@
             "chapter": 1,
             "section": 1
         },
-        "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "一",
-                "suf": "章"
-            },
-            "section": {
-                "pre": "第",
-                "num": "一",
-                "suf": "回"
-            }
 
+        "chapterDisplay": {
+            "pre": "第",
+            "num": "一",
+            "suf": "章"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "一",
+            "suf": "回"
         }
+
+
     },
     "很厚的書": {
         "title": "很厚的書",
@@ -295,18 +294,18 @@
             "chapter": 471,
             "section": 99
         },
+
         "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "1",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "1",
-                "suf": "章"
-            }
+            "pre": "第",
+            "num": "1",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "1",
+            "suf": "章"
         }
+
     },
     "這邊還有一本": {
         "title": "這邊還有一本",
@@ -314,18 +313,18 @@
         "desc": "N/A",
         "tags": [],
         "cover": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
-        "chapterDisplay": {
-            "chapter": {
-                "pre": "第",
-                "num": "1",
-                "suf": "部"
-            },
-            "section": {
-                "pre": "第",
-                "num": "1",
-                "suf": "章"
-            }
 
+        "chapterDisplay": {
+            "pre": "第",
+            "num": "1",
+            "suf": "部"
+        },
+        "sectionDisplay": {
+            "pre": "第",
+            "num": "1",
+            "suf": "章"
         }
+
+
     }
 }

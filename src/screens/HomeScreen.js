@@ -7,7 +7,7 @@ import {
   IconButton,
   Text,
 } from "native-base";
-import BookButton from "../components/BookButton";
+import BookButtonNormal from "../components/BookButton";
 import bookMap from "../test/books.json";
 import testData from "../test/testData.json";
 import * as FileSystem from "expo-file-system";
@@ -33,31 +33,27 @@ export default function HomeScreen({ navigation }) {
   // }, []);
 
   const bookBig = (item) => (
-    <BookButton
+    <BookButtonNormal
       mx={4}
       my={2}
-      navigation={navigation}
+      styleType={1}
       bookData={bookMap[item]}
       height={160}
-      mode="big"
-      onPress={() => navigation.navigate("BookReader", { book: bookMap[item] })}
     />
   );
   const bookNormal = ({ item }) => (
-    <BookButton
+    <BookButtonNormal
       ml={4}
       my={2}
       width={200}
       height={290}
-      navigation={navigation}
       bookData={bookMap[item]}
-      onPress={() => navigation.navigate("BookReader", { book: bookMap[item] })}
     />
   );
   const sections = ({ section }) => {
     if (section.title === "繼續閱讀")
       return (
-        <Box mt={8}>
+        <Box>
           <Text ml={4} fontSize="3xl">
             {section.title}
           </Text>

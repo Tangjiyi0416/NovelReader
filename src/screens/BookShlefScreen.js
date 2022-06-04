@@ -9,12 +9,12 @@ import {
   Icon,
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import BookButton from "../components/BookButton";
+import BookButtonNormal from "../components/BookButton";
 import bookMap from "../test/books.json";
 import testData from "../test/testData2.json";
 export default function BookShelfScreen({ navigation }) {
   const bookNormal = ({ item }) => (
-    <BookButton
+    <BookButtonNormal
       ml={4}
       my={2}
       width={200}
