@@ -1,50 +1,24 @@
-import React from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Text,
-  SectionList,
-  FlatList,
-  Icon,
-} from "native-base";
+import React, { useEffect, useState } from "react";
+import { Box, Button, Flex, Text, FlatList, Icon } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import BookButtonNormal from "../components/BookButton";
-import bookMap from "../test/books.json";
-import testData from "../test/testData2.json";
+import { DetailedBookButton } from "../components/BookButton";
+import { useSelector } from "react-redux";
+import { selectBookList } from "../redux/bookListSlice";
 export default function BookShelfScreen({ navigation }) {
+  const bookList = useSelector(selectBookList);
+  const [currentList, setCurrentList] = useState([]);
+  useEffect(() => {
+    setCurrentList(Object.values(bookList));
+  }, [bookList]);
   const bookNormal = ({ item }) => (
-    <BookButtonNormal
+    <DetailedBookButton
       ml={4}
       my={2}
       width={200}
       height={290}
-      navigation={navigation}
-      bookData={bookMap[item]}
-      onPress={() => navigation.navigate("BookReader", { book: bookMap[item] })}
+      bookData={item}
     />
   );
-  const sections = ({ section }) => {
-    return (
-      <Box>
-        <Flex direction="row" justify="space-between">
-          <Text ml={4} fontSize="3xl">
-            {section.title}
-          </Text>
-          <Button colorScheme="myButton" mr={4}>
-            <Icon as={MaterialCommunityIcons} name="pencil" size={8} />
-          </Button>
-        </Flex>
-        <FlatList
-          horizontal={true}
-          data={section.data}
-          keyExtractor={(item) => item + section.title}
-          renderItem={bookNormal}
-          showsHorizontalScrollIndicator={false}
-        />
-      </Box>
-    );
-  };
   return (
     <Box
       flex={1}
@@ -69,15 +43,17 @@ export default function BookShelfScreen({ navigation }) {
         )}
         showsHorizontalScrollIndicator={false}
       />
-      <SectionList
+      <Flex direction="row" justify="space-between">
+        <Button colorScheme="myButton" mr={4}>
+          <Icon as={MaterialCommunityIcons} name="pencil" size={8} />
+        </Button>
+      </Flex>
+      <FlatList
         mb={50} //tabbar height
-        sections={testData}
-        keyExtractor={(item, index) => item + index}
-        stickySectionHeadersEnabled={false}
+        data={currentList}
+        keyExtractor={(item, index) => index}
+        renderItem={bookNormal}
         showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        renderItem={() => null}
-        renderSectionHeader={sections}
       />
     </Box>
   );

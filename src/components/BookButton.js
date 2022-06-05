@@ -2,6 +2,73 @@ import { Box, Center, Flex, Image, Text, Pressable } from "native-base";
 import React from "react";
 import { toWords } from "number-to-chinese-words";
 import { useNavigation } from "@react-navigation/native";
+export function DetailedBookButton({ bookData, width, height, ...props }) {
+  const navigation = useNavigation();
+
+  const ProgressDisplay = () => {
+    return (
+      <Flex direction={"row"} align="center" opacity={0.5} w="100%">
+        {bookData.progress?.chapter ? (
+          <Text mx={2} fontSize={20}>
+            {bookData.chapterDisplay?.pre ?? null}
+            {bookData.chapterDisplay?.num == "一"
+              ? toWords(bookData.progress.chapter)
+              : bookData.progress.chapter}
+            {bookData.chapterDisplay?.suf ?? null}
+          </Text>
+        ) : (
+          <Text mx={2} fontSize={20}>
+            未閱讀
+          </Text>
+        )}
+        {bookData.progress?.section ? (
+          <Text mx={2} fontSize={20}>
+            {bookData.sectionDisplay?.pre ?? null}
+            {bookData.sectionDisplay?.num == "一"
+              ? toWords(bookData.progress.section)
+              : bookData.progress.section}
+            {bookData.sectionDisplay?.suf ?? null}
+          </Text>
+        ) : null}
+      </Flex>
+    );
+  };
+  return (
+    <Pressable
+      onPress={() => navigation.navigate("BookReader", { book: bookData })}
+      _pressed={{ opacity: 0.8 }}
+    >
+      <Flex
+        shadow={3}
+        w={width}
+        h={height}
+        _light={{ bgColor: "myColors.lightCard" }}
+        _dark={{ bgColor: "myColors.darkCard" }}
+        borderRadius={6}
+        justify="space-evenly"
+        overflow="hidden"
+        {...props}
+      >
+        <Image
+          source={{
+            uri:
+              bookData.cover ??
+              "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
+          }}
+          width={112}
+          height={160}
+          alt="book cover"
+        />
+        <Flex direction="column" align="center">
+          <Text numberOfLines={1} fontSize={22}>
+            {bookData.title}
+          </Text>
+          <ProgressDisplay />
+        </Flex>
+      </Flex>
+    </Pressable>
+  );
+}
 
 export default function BookButton({
   bookData,
@@ -66,13 +133,19 @@ export default function BookButton({
       >
         <Image
           source={{
-            uri: bookData.cover,
+            uri:
+              bookData.cover ??
+              "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
           }}
-          width={140}
-          height={200}
+          width={112}
+          height={160}
           alt="book cover"
         />
-        <Flex direction="column" align="center" justify="space-evenly">
+        <Flex
+          direction="column"
+          align="center"
+          w={styleType == 1 ? "45%" : "auto"}
+        >
           <Text
             numberOfLines={1}
             fontSize={22}

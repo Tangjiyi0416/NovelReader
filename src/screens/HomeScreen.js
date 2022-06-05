@@ -1,80 +1,46 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  FlatList,
-  SectionList,
-  IconButton,
-  Text,
-} from "native-base";
+import React, { useEffect, useState } from "react";
+import { Box, FlatList, ScrollView, Text } from "native-base";
 import BookButtonNormal from "../components/BookButton";
-import bookMap from "../test/books.json";
-import testData from "../test/testData.json";
-import * as FileSystem from "expo-file-system";
 import { useDispatch, useSelector } from "react-redux";
+import { selectLastReadTitle } from "../redux/lastReadSlice";
+import { selectBookList } from "../redux/bookListSlice";
 
 export default function HomeScreen({ navigation }) {
-  const path = FileSystem.documentDirectory;
-  // const { bookMap } = useSelector((state) => state.bookData);
-  const dispatch = useDispatch();
-  const [data, setData] = useState(testData);
-  // console.warn(bookMap);
-  // console.warn(path + "books.jsonh");
-  // React.useEffect(() => {
-  //   FileSystem.readAsStringAsync(path + "books.json")
-  //     .then((result) => {
-  //       bookMap = JSON.parse(result);
-  //     })
-  //     .catch(() => console.warn("no record yet."))
-  //     .finally(() => {
-  //       setData([...data, Object.keys(bookMap)]);
-  //       setBookMap({ ...bookMap, ...testBookMap });
-  //     });
-  // }, []);
-
-  const bookBig = (item) => (
-    <BookButtonNormal
-      mx={4}
-      my={2}
-      styleType={1}
-      bookData={bookMap[item]}
-      height={160}
-    />
-  );
+  const lastReadTitle = useSelector(selectLastReadTitle);
+  const booklist = useSelector(selectBookList);
+  const [unread, setUnread] = useState([]);
+  const [added, setAdded] = useState([]);
+  useEffect(() => {
+    setUnread(
+      Object.entries(booklist)
+        .filter(([key, value]) => !value.progress)
+        .sort((a, b) => {
+          if (a[1].time < b[1].time) return -1;
+          if (a[1].time > b[1].time) return 1;
+          return 0;
+        })
+    );
+    setAdded(
+      Object.entries(booklist)
+        .filter(([key, value]) => Date.now() - value.time < 604800000) //一周內
+        .sort((a, b) => {
+          if (a[1].time < b[1].time) return 1;
+          if (a[1].time > b[1].time) return -1;
+          return 0;
+        })
+        .slice(0, 5)
+    );
+    // setAdded(Object.entries(booklist).filter(([key,value])=>!value.progress));
+  }, [booklist]);
   const bookNormal = ({ item }) => (
     <BookButtonNormal
       ml={4}
       my={2}
       width={200}
       height={290}
-      bookData={bookMap[item]}
+      bookData={item[1]}
     />
   );
-  const sections = ({ section }) => {
-    if (section.title === "繼續閱讀")
-      return (
-        <Box>
-          <Text ml={4} fontSize="3xl">
-            {section.title}
-          </Text>
-          {bookBig(section.data[0])}
-        </Box>
-      );
-    return (
-      <Box>
-        <Text ml={4} fontSize="3xl">
-          {section.title}
-        </Text>
-        <FlatList
-          horizontal={true}
-          data={section.data}
-          keyExtractor={(item) => item + section.title}
-          renderItem={bookNormal}
-          showsHorizontalScrollIndicator={false}
-        />
-      </Box>
-    );
-  };
 
   return (
     <Box
@@ -82,16 +48,63 @@ export default function HomeScreen({ navigation }) {
       _light={{ bg: "myColors.light60" }}
       _dark={{ bg: "myColors.dark60" }}
     >
-      <SectionList
+      <ScrollView
         mb={50} //tabbar height
-        sections={testData}
+      >
+        {booklist[lastReadTitle] && (
+          <Box>
+            <Text ml={4} fontSize="3xl">
+              繼續閱讀
+            </Text>
+            <BookButtonNormal
+              mx={4}
+              my={2}
+              styleType={1}
+              bookData={booklist[lastReadTitle]}
+              height={160}
+            />
+          </Box>
+        )}
+
+        <Box>
+          {unread.length > 0 && (
+            <Text ml={4} fontSize="3xl">
+              尚未閱讀
+            </Text>
+          )}
+          <FlatList
+            horizontal={true}
+            data={unread}
+            keyExtractor={(item, index) => index}
+            renderItem={bookNormal}
+            showsHorizontalScrollIndicator={false}
+          />
+        </Box>
+        <Box>
+          {added.length > 0 && (
+            <Text ml={4} fontSize="3xl">
+              最近新增
+            </Text>
+          )}
+          <FlatList
+            horizontal={true}
+            data={added}
+            keyExtractor={(item, index) => index}
+            renderItem={bookNormal}
+            showsHorizontalScrollIndicator={false}
+          />
+        </Box>
+      </ScrollView>
+      {/* <SectionList
+        mb={50} //tabbar height
+        sections={data}
         keyExtractor={(item, index) => item + index}
         stickySectionHeadersEnabled={false}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         renderItem={() => null}
         renderSectionHeader={sections}
-      />
+      /> */}
     </Box>
   );
 }

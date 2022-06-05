@@ -6,11 +6,13 @@ import {
   useColorMode,
   ScrollView,
   VStack,
+  Divider,
 } from "native-base";
 import * as FileSystem from "expo-file-system";
 import { useDispatch } from "react-redux";
 import { clearBookList } from "../redux/bookListSlice";
-
+import { resetSettings } from "../redux/viewSettingSlice";
+import { setLastRead } from "../redux/lastReadSlice";
 export default function SettingsScreen() {
   const { toggleColorMode } = useColorMode();
   const dispatch = useDispatch();
@@ -18,11 +20,12 @@ export default function SettingsScreen() {
     const path = FileSystem.documentDirectory;
     FileSystem.deleteAsync(path + "books")
       .then(() => {
-        console.warn("All data cleared.");
+        console.log("All data cleared.");
         dispatch(clearBookList());
+        dispatch(setLastRead(""));
       })
       .catch(() => {
-        console.warn("No data to clear");
+        console.log("No data to clear");
       });
   };
   return (
@@ -56,12 +59,22 @@ export default function SettingsScreen() {
               Color Mode
             </Text>
           </Button>
+          <Divider h={5} />
           <Button onPress={ClearAllData}>
             <Text
               _light={{ color: "myColors.light30" }}
               _dark={{ color: "myColors.light30" }}
             >
               Clear all Data
+            </Text>
+          </Button>
+          <Divider h={5} />
+          <Button onPress={() => dispatch(resetSettings())}>
+            <Text
+              _light={{ color: "myColors.light30" }}
+              _dark={{ color: "myColors.light30" }}
+            >
+              Reset View Settings
             </Text>
           </Button>
         </VStack>

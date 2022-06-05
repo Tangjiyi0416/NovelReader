@@ -428,26 +428,32 @@ export default function BookImportScreen({ navigation, route }) {
           to: path,
         })
           .then(() => {
-            console.warn("book copied successed.");
+            console.log("book copied successed.");
           })
           .catch(() => {
-            console.warn("book exited.");
+            console.log("book exited.");
           })
           .finally(() => {
-            dispatch(
-              addBook({
-                ...bookData,
-                uri: path + bookData.title + ".txt",
-              })
-            );
-            // FileSystem.readAsStringAsync(path + bookData.title + ".txt").then(
-            //   (value) => {
-            //     const lines = value.split("\n").length;
-            //     console.warn(lines);
-            //   }
-            // );
-            console.warn("info updated.");
-            navigation.goBack();
+            FileSystem.moveAsync({
+              from: path + route.params.documentResult.name,
+              to: path + bookData.title + ".txt",
+            }).then(() => {
+              dispatch(
+                addBook({
+                  ...bookData,
+                  uri: path + bookData.title + ".txt",
+                  time: Date.now(),
+                })
+              );
+              // FileSystem.readAsStringAsync(path + bookData.title + ".txt").then(
+              //   (value) => {
+              //     const lines = value.split("\n").length;
+              //     console.log(lines);
+              //   }
+              // );
+              console.log("info updated.");
+              navigation.goBack();
+            });
           });
       });
     }

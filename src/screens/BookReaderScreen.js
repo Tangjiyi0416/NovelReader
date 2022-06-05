@@ -1,152 +1,171 @@
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   Box,
   Button,
   Divider,
   FlatList,
-  Hidden,
   HStack,
   Icon,
   Pressable,
-  ScrollView,
-  Slider,
-  Spacer,
   Spinner,
   Text,
   useToast,
   VStack,
+  Center,
+  Modal,
 } from "native-base";
 import ActiveButton from "../components/ActiveButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
 import TransButton from "../components/TransButton";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSettings, setSettings } from "../redux/viewSettingSlice";
+import { setLastRead } from "../redux/lastReadSlice";
+import { addBook, selectBookList } from "../redux/bookListSlice";
+const OverlayMenu = ({ overlayMenuIndex }) => {
+  const dispatch = useDispatch();
+  switch (overlayMenuIndex) {
+    case 0:
+      return null;
+    case 1:
+      return null;
+    case 2:
+      return (
+        <VStack
+          w="3/4"
+          _light={{ bgColor: "myColors.light30" }}
+          _dark={{ bgColor: "myColors.dark30" }}
+        >
+          <Text fontSize={20} mt={3}>
+            Padding (左右)
+          </Text>
+          <HStack justifyContent={"space-between"} alignItems="center">
+            <ActiveButton
+              w={8}
+              h={8}
+              onPress={() => {
+                dispatch(setSettings({ px: settings.px - 10 }));
+              }}
+              name="minus"
+            />
+            <Text fontSize={26}>{settings.px}</Text>
+            <ActiveButton
+              w={8}
+              h={8}
+              onPress={() => {
+                dispatch(setSettings({ px: settings.px + 10 }));
+              }}
+              name="plus"
+            />
+          </HStack>
 
+          <Divider
+            mt={4}
+            _light={{ bg: "myColors.light30" }}
+            _dark={{ bg: "myColors.dark30" }}
+          />
+        </VStack>
+      );
+    case 3:
+      return null;
+    case 4:
+      return null;
+    case 5:
+      return null;
+  }
+};
+
+const OverlayBar = ({ modalSetter, overlayMenuSetter, overlayMenuIndex }) => {
+  return (
+    <VStack bottom={0} position="absolute" width="100%">
+      <HStack
+        justifyContent="center"
+        px={2}
+        _light={{ bg: "myColors.light30" }}
+        _dark={{ bg: "myColors.dark30" }}
+      >
+        <OverlayMenu overlayMenuIndex={overlayMenuIndex} />
+      </HStack>
+      <HStack
+        px={2}
+        _light={{ bg: "myColors.light30" }}
+        _dark={{ bg: "myColors.dark30" }}
+      >
+        <Button
+          flex={1}
+          onPress={() => modalSetter(true)}
+          colorScheme="myButton"
+        >
+          <Text fontSize={28}>目錄</Text>
+        </Button>
+        <Button
+          flex={1}
+          onPress={() => overlayMenuSetter(2)}
+          colorScheme="myButton"
+        >
+          <Text fontSize={28}>版面</Text>
+        </Button>
+        <Button
+          flex={1}
+          onPress={() => overlayMenuSetter(3)}
+          colorScheme="myButton"
+        >
+          <Text fontSize={28}>顏色</Text>
+        </Button>
+        <Button
+          flex={1}
+          onPress={() => overlayMenuSetter(4)}
+          colorScheme="myButton"
+        >
+          <Text fontSize={28}>書籤</Text>
+        </Button>
+        <Button
+          flex={1}
+          onPress={() => overlayMenuSetter(5)}
+          colorScheme="myButton"
+        >
+          <Icon as={MaterialCommunityIcons} name="dots-horizontal" size={12} />
+        </Button>
+      </HStack>
+    </VStack>
+  );
+};
 export default function BookReaderScreen({ route, navigation }) {
   const toast = useToast();
   const [content, setContent] = useState([]);
   const [indexes, setIndexes] = useState([]);
   const [showOverlay, setOverlay] = useState(false);
   const [overlayMenuIndex, setOverlayMenuIndex] = useState(0);
-  const [pdx, setPdx] = useState(16);
-  const OverlayMenu = () => {
-    switch (overlayMenuIndex) {
-      case 0:
-        return null;
-      case 1:
-        return null;
-      case 2:
-        return (
-          <VStack
-            w="3/4"
-            _light={{ bgColor: "myColors.light30" }}
-            _dark={{ bgColor: "myColors.dark30" }}
-          >
-            <Text fontSize={20} mt={3}>
-              Padding (左右)
-            </Text>
-            <HStack justifyContent={"space-between"} alignItems="center">
-              <ActiveButton
-                w={8}
-                h={8}
-                onPress={() => {
-                  setPdx(pdx + 5);
-                }}
-                name="plus"
-              />
-              <Text fontSize={26}>{pdx}</Text>
-              <ActiveButton
-                w={8}
-                h={8}
-                onPress={() => {
-                  setPdx(pdx - 5);
-                }}
-                name="minus"
-              />
-            </HStack>
-            {/* <Slider
-              defaultValue={4}
-              minValue={0}
-              maxValue={16}
-              accessibilityLabel="hello world"
-              step={1}
-              onChangeEnd={(v) => {
-                v && setPdx(v);
-              }}
-            >
-              <Slider.Track>
-                <Slider.FilledTrack />
-              </Slider.Track>
-              <Slider.Thumb />
-            </Slider>
-            <Divider
-              mt={4}
-              _light={{ bg: "myColors.light30" }}
-              _dark={{ bg: "myColors.dark30" }}
-            /> */}
-            <Text fontSize={20}>Padding (上下)</Text>
-            <HStack justifyContent={"space-between"} alignItems="center">
-              <ActiveButton
-                w={8}
-                h={8}
-                onPress={() => {
-                  setPdx(pdx + 5);
-                }}
-                name="plus"
-              />
-              <Text fontSize={26}>{pdx}</Text>
-              <ActiveButton
-                w={8}
-                h={8}
-                onPress={() => {
-                  setPdx(pdx - 5);
-                }}
-                name="minus"
-              />
-            </HStack>
-            {/* <Slider
-              defaultValue={4}
-              minValue={0}
-              maxValue={16}
-              accessibilityLabel="hello world"
-              step={1}
-            >
-              <Slider.Track>
-                <Slider.FilledTrack />
-              </Slider.Track>
-              <Slider.Thumb />
-            </Slider> */}
-            <Divider
-              mt={4}
-              _light={{ bg: "myColors.light30" }}
-              _dark={{ bg: "myColors.dark30" }}
-            />
-          </VStack>
-        );
-      case 3:
-        return null;
-      case 4:
-        return null;
-      case 5:
-        return null;
-    }
-  };
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const dispatch = useDispatch();
+  const settings = useSelector(selectSettings);
+  const bookList = useSelector(selectBookList);
+  const mainList = useRef(null);
+  const indexList = useRef(null);
 
-  const renderItem = ({ item }) => {
-    return <Text fontSize={24}>{item}</Text>;
-  };
   React.useEffect(() => {
     const bookData = route.params.book;
     FileSystem.readAsStringAsync(bookData.uri)
       .then((result) => {
-        const content = result.split("\n");
+        const content = result
+          .split("\n")
+          .filter((line) => line[0] != "\r" && line[0] != "\n");
         setContent(content);
         let inds = [];
         content.forEach((line, index) => {
-          if (line[0] !== "　" && line !== "") {
+          if (line[0] !== "　") {
             inds.push({ line: line, index: index });
           }
         });
         setIndexes(inds);
+        mainList.current.scrollToIndex({
+          index: bookList[bookData.title].progress.actualLine,
+          viewPosition: 0,
+        });
+        dispatch(
+          addBook({ title: bookData.title, totalLines: content.length })
+        );
+        dispatch(setLastRead(bookData.title));
       })
       .catch(() => {
         setContent([
@@ -158,7 +177,44 @@ export default function BookReaderScreen({ route, navigation }) {
         });
       });
   }, []);
+  const toggleOverlay = () => {
+    // console.log("adw");
+    // setTest(test + 1);
+    setOverlay(!showOverlay);
+    setOverlayMenuIndex(0);
+    // console.log("c");
+  };
 
+  const renderLine = ({ item }) => <Text fontSize={24}>{`${item}\n`}</Text>;
+  const renderIndex = ({ item }) => {
+    return (
+      <Pressable
+        onPress={() => {
+          // mainList.current.scrollToEnd({ animated: true });
+          console.log(item.index);
+          mainList.current.scrollToIndex({
+            index: item.index,
+            viewPosition: 0,
+          });
+        }}
+      >
+        <Text>{item.line}</Text>
+      </Pressable>
+    );
+  };
+  const onViewableItemsChanged = useCallback(function ({ changed }) {
+    // console.log("=========================================================");
+    const line = changed.reverse().find((p) => !p.isViewable);
+    if (line) {
+      // console.log(line);
+      dispatch(
+        addBook({
+          title: route.params.book.title,
+          progress: { actualLine: line.index },
+        })
+      );
+    }
+  }, []);
   return (
     <Box
       safeArea={true}
@@ -166,106 +222,79 @@ export default function BookReaderScreen({ route, navigation }) {
       _light={{ bg: "myColors.light60" }}
       _dark={{ bg: "myColors.dark60" }}
     >
-      <Box flex={1} alignItems="center">
-        <Pressable
-          onPress={() => {
-            setOverlay(!showOverlay);
-            setOverlayMenuIndex(0);
+      {/* <Pressable flex={1} onPress={toggleOverlay}> */}
+      <Center>
+        <FlatList
+          ref={mainList}
+          onTouchEnd={toggleOverlay}
+          ListFooterComponent={() => (
+            <Spinner size={110} accessibilityLabel="Loading posts" />
+          )}
+          maxToRenderPerBatch={400}
+          // updateCellsBatchingPeriod={500}
+          data={content}
+          renderItem={renderLine}
+          keyExtractor={(item, index) => index}
+          px={`${settings.px}px`}
+          viewabilityConfig={{ itemVisiblePercentThreshold: 100 }}
+          onViewableItemsChanged={onViewableItemsChanged}
+          onScrollToIndexFailed={({ index, averageItemLength }) => {
+            mainList.current.scrollToOffset({
+              offset: averageItemLength * index,
+            });
+            setTimeout(() => {
+              mainList.current.scrollToIndex({ index: index });
+            }, 200);
           }}
-        >
-          <FlatList
-            inde
-            ListFooterComponent={() => (
-              <Spinner accessibilityLabel="Loading posts" />
-            )}
-            updateCellsBatchingPeriod={500}
-            data={content}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index}
-            px={`${pdx}px`}
-          />
-
-          {/* <Divider
+        />
+      </Center>
+      {/* <Divider
             mt={4}
             _light={{ bg: "myColors.light60" }}
             _dark={{ bg: "myColors.dark60" }}
           /> */}
 
-          {/* <Divider
+      {/* <Divider
             mt={8}
             _light={{ bg: "myColors.light60" }}
             _dark={{ bg: "myColors.dark60" }}
           /> */}
-        </Pressable>
-        {showOverlay ? (
-          <ActiveButton
-            position="absolute"
-            left={4}
-            top={4}
-            name="arrow-left"
-            iconSize={8}
-            onPress={navigation.goBack}
-            shadow={3}
+      {/* </Pressable> */}
+      {showOverlay ? (
+        <ActiveButton
+          position="absolute"
+          left={4}
+          top={4}
+          name="arrow-left"
+          iconSize={8}
+          onPress={navigation.goBack}
+          shadow={3}
+        />
+      ) : null}
+      {showOverlay ? (
+        <OverlayBar
+          modalSetter={setModalVisible}
+          overlayMenuSetter={setOverlayMenuIndex}
+          overlayMenuIndex={overlayMenuIndex}
+        />
+      ) : null}
+      <Modal isOpen={modalVisible} onClose={setModalVisible} size={"full"}>
+        <Modal.Content maxH="212">
+          <Modal.CloseButton />
+          <Modal.Header>目錄</Modal.Header>
+          {/* <Modal.Body> */}
+          <FlatList
+            ref={indexList}
+            ListFooterComponent={() => (
+              <Spinner size={30} accessibilityLabel="Loading indexes" />
+            )}
+            data={indexes}
+            renderItem={renderIndex}
+            keyExtractor={(item, index) => index}
           />
-        ) : null}
-        {showOverlay ? (
-          <VStack bottom={0} position="absolute" width="100%">
-            <HStack
-              justifyContent="center"
-              px={2}
-              _light={{ bg: "myColors.light30" }}
-              _dark={{ bg: "myColors.dark30" }}
-            >
-              <OverlayMenu />
-            </HStack>
-            <HStack
-              px={2}
-              _light={{ bg: "myColors.light30" }}
-              _dark={{ bg: "myColors.dark30" }}
-            >
-              <Button
-                flex={1}
-                onPress={() => setOverlayMenuIndex(1)}
-                colorScheme="myButton"
-              >
-                <Text fontSize={28}>目錄</Text>
-              </Button>
-              <Button
-                flex={1}
-                onPress={() => setOverlayMenuIndex(2)}
-                colorScheme="myButton"
-              >
-                <Text fontSize={28}>版面</Text>
-              </Button>
-              <Button
-                flex={1}
-                onPress={() => setOverlayMenuIndex(3)}
-                colorScheme="myButton"
-              >
-                <Text fontSize={28}>顏色</Text>
-              </Button>
-              <Button
-                flex={1}
-                onPress={() => setOverlayMenuIndex(4)}
-                colorScheme="myButton"
-              >
-                <Text fontSize={28}>書籤</Text>
-              </Button>
-              <Button
-                flex={1}
-                onPress={() => setOverlayMenuIndex(5)}
-                colorScheme="myButton"
-              >
-                <Icon
-                  as={MaterialCommunityIcons}
-                  name="dots-horizontal"
-                  size={12}
-                />
-              </Button>
-            </HStack>
-          </VStack>
-        ) : null}
-      </Box>
+          {/* </Modal.Body> */}
+        </Modal.Content>
+      </Modal>
     </Box>
   );
 }
