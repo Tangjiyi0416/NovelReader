@@ -6,15 +6,29 @@ import bookListReducer from "./bookListSlice";
 import bookImportDataReducer from "./bookImportDataSlice";
 import viewSettingReducer from "./viewSettingSlice";
 import lastReadReducer from "./lastReadSlice";
-const persistConfig = {
-  key: "root",
-  storage: AsyncStorage,
-};
 export const store = configureStore({
   reducer: {
-    bookList: persistReducer(persistConfig, bookListReducer),
-    lastRead: persistReducer(persistConfig, lastReadReducer),
-    settings: persistReducer(persistConfig, viewSettingReducer),
+    bookList: persistReducer(
+      {
+        key: "root/list",
+        storage: AsyncStorage,
+      },
+      bookListReducer
+    ),
+    lastRead: persistReducer(
+      {
+        key: "root/lastread",
+        storage: AsyncStorage,
+      },
+      lastReadReducer
+    ),
+    settings: persistReducer(
+      {
+        key: "root/settings",
+        storage: AsyncStorage,
+      },
+      viewSettingReducer
+    ),
     bookImportData: bookImportDataReducer,
   },
   devTools: process.env.NODE_ENV !== "production",

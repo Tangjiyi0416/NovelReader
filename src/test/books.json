@@ -8,12 +8,7 @@
         ],
         "uri": "file:///data/user/0/host.exp.exponent/files/ExperienceData/%2540ntuedtdapp2022%252FNovelReader/books/《一世之尊》（精校版全本）作者：愛潛水的烏賊.txt",
         "cover": "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
-        "progress": {
-            "chapter": 1,
-            "section": 1,
-            "line": 12,
-            "actualLine": 12
-        },
+        "progress": 12,
         "chapterDisplay": {
             "pre": "第",
             "num": "一",

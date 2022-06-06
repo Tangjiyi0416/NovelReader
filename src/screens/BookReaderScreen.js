@@ -24,6 +24,7 @@ import { setLastRead } from "../redux/lastReadSlice";
 import { addBook, selectBookList } from "../redux/bookListSlice";
 const OverlayMenu = ({ overlayMenuIndex }) => {
   const dispatch = useDispatch();
+  const settings = useSelector(selectSettings);
   switch (overlayMenuIndex) {
     case 0:
       return null;
@@ -146,27 +147,6 @@ export default function BookReaderScreen({ route, navigation }) {
   React.useEffect(() => {
     const bookData = route.params.book;
     FileSystem.readAsStringAsync(bookData.uri)
-      .then((result) => {
-        const content = result
-          .split("\n")
-          .filter((line) => line[0] != "\r" && line[0] != "\n");
-        setContent(content);
-        let inds = [];
-        content.forEach((line, index) => {
-          if (line[0] !== "　") {
-            inds.push({ line: line, index: index });
-          }
-        });
-        setIndexes(inds);
-        mainList.current.scrollToIndex({
-          index: bookList[bookData.title].progress.actualLine,
-          viewPosition: 0,
-        });
-        dispatch(
-          addBook({ title: bookData.title, totalLines: content.length })
-        );
-        dispatch(setLastRead(bookData.title));
-      })
       .catch(() => {
         setContent([
           "觀自在菩薩，行深般若波羅蜜多時，照見五蘊皆空，度一切苦厄。舍利子，色不異空，空不異色；色即是空，空即是色。受、想、行、識，亦復如是。舍利子，是諸法空相，不生不滅，不垢不淨，不增不減，是故空中無色，無受、想、行、識；無眼、耳、鼻、舌、身、意；無色、聲、香、味、觸、法；無眼界，乃至無意識界；無無明，亦無無明盡；乃至無老死，亦無老死盡。無苦、集、滅、道，無智亦無得，以無所得故。菩提薩埵，依般若波羅蜜多故，心無罣礙。無罣礙故，無有恐怖，遠離顛倒夢想，究竟涅槃。三世諸佛，依般若波羅蜜多故，得阿耨多羅三藐三菩提。故知般若波羅蜜多，是大神咒，是大明咒，是無上咒，是無等等咒，能除一切苦，真實不虛。故說般若波羅蜜多咒，即說咒曰：「揭諦、揭諦，波羅揭諦，波羅僧揭諦，菩提薩婆訶。」觀自在菩薩，行深般若波羅蜜多時，照見五蘊皆空，度一切苦厄。舍利子，色不異空，空不異色；色即是空，空即是色。受、想、行、識，亦復如是。舍利子，是諸法空相，不生不滅，不垢不淨，不增不減，是故空中無色，無受、想、行、識；無眼、耳、鼻、舌、身、意；無色、聲、香、味、觸、法；無眼界，乃至無意識界；無無明，亦無無明盡；乃至無老死，亦無老死盡。無苦、集、滅、道，無智亦無得，以無所得故。菩提薩埵，依般若波羅蜜多故，心無罣礙。無罣礙故，無有恐怖，遠離顛倒夢想，究竟涅槃。三世諸佛，依般若波羅蜜多故，得阿耨多羅三藐三菩提。故知般若波羅蜜多，是大神咒，是大明咒，是無上咒，是無等等咒，能除一切苦，真實不虛。故說般若波羅蜜多咒，即說咒曰：「揭諦、揭諦，波羅揭諦，波羅僧揭諦，菩提薩婆訶。」",
@@ -175,7 +155,21 @@ export default function BookReaderScreen({ route, navigation }) {
           description: "又讀不起來ㄟ，讀讀心經消消氣(X",
           bg: "danger.500",
         });
-      });
+      })
+      .then((result) => {
+        const content = result.split("\n");
+        setContent(content);
+        const inds = bookData.indexes.flat().map((index) => {
+          return { line: content[index], index: index };
+        });
+        setIndexes(inds);
+        mainList.current.scrollToIndex({
+          index: bookList[bookData.title].progress ?? 0,
+          viewPosition: 0,
+        });
+        dispatch(setLastRead(bookData.title));
+      })
+      .catch(() => console.log("index parsing faild"));
   }, []);
   const toggleOverlay = () => {
     // console.log("adw");
@@ -198,7 +192,7 @@ export default function BookReaderScreen({ route, navigation }) {
           });
         }}
       >
-        <Text>{item.line}</Text>
+        <Text fontSize={24}>{item.line}</Text>
       </Pressable>
     );
   };
@@ -206,11 +200,11 @@ export default function BookReaderScreen({ route, navigation }) {
     // console.log("=========================================================");
     const line = changed.reverse().find((p) => !p.isViewable);
     if (line) {
-      // console.log(line);
+      console.log(line);
       dispatch(
         addBook({
           title: route.params.book.title,
-          progress: { actualLine: line.index },
+          progress: line.index,
         })
       );
     }
@@ -223,31 +217,33 @@ export default function BookReaderScreen({ route, navigation }) {
       _dark={{ bg: "myColors.dark60" }}
     >
       {/* <Pressable flex={1} onPress={toggleOverlay}> */}
-      <Center>
-        <FlatList
-          ref={mainList}
-          onTouchEnd={toggleOverlay}
-          ListFooterComponent={() => (
-            <Spinner size={110} accessibilityLabel="Loading posts" />
-          )}
-          maxToRenderPerBatch={400}
-          // updateCellsBatchingPeriod={500}
-          data={content}
-          renderItem={renderLine}
-          keyExtractor={(item, index) => index}
-          px={`${settings.px}px`}
-          viewabilityConfig={{ itemVisiblePercentThreshold: 100 }}
-          onViewableItemsChanged={onViewableItemsChanged}
-          onScrollToIndexFailed={({ index, averageItemLength }) => {
-            mainList.current.scrollToOffset({
-              offset: averageItemLength * index,
-            });
-            setTimeout(() => {
-              mainList.current.scrollToIndex({ index: index });
-            }, 200);
-          }}
-        />
-      </Center>
+      {/* <Center flex={1}> */}
+      <FlatList
+        ref={mainList}
+        onTouchEnd={toggleOverlay}
+        ListFooterComponent={() => (
+          <Spinner size={110} accessibilityLabel="Loading posts" />
+        )}
+        maxToRenderPerBatch={100}
+        // updateCellsBatchingPeriod={500}
+        data={content}
+        renderItem={renderLine}
+        keyExtractor={(item, index) => index}
+        px={`${settings.px}px`}
+        width={"100%"}
+        flex={1}
+        viewabilityConfig={{ itemVisiblePercentThreshold: 100 }}
+        onViewableItemsChanged={onViewableItemsChanged}
+        onScrollToIndexFailed={({ index, averageItemLength }) => {
+          mainList.current.scrollToOffset({
+            offset: averageItemLength * index,
+          });
+          setTimeout(() => {
+            mainList.current.scrollToIndex({ index: index });
+          }, 200);
+        }}
+      />
+      {/* </Center> */}
       {/* <Divider
             mt={4}
             _light={{ bg: "myColors.light60" }}
@@ -279,7 +275,7 @@ export default function BookReaderScreen({ route, navigation }) {
         />
       ) : null}
       <Modal isOpen={modalVisible} onClose={setModalVisible} size={"full"}>
-        <Modal.Content maxH="212">
+        <Modal.Content maxH="60%">
           <Modal.CloseButton />
           <Modal.Header>目錄</Modal.Header>
           {/* <Modal.Body> */}

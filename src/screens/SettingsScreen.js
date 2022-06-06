@@ -19,13 +19,13 @@ export default function SettingsScreen() {
   const ClearAllData = () => {
     const path = FileSystem.documentDirectory;
     FileSystem.deleteAsync(path + "books")
+      .catch(() => {
+        console.log("No data to clear");
+      })
       .then(() => {
         console.log("All data cleared.");
         dispatch(clearBookList());
         dispatch(setLastRead(""));
-      })
-      .catch(() => {
-        console.log("No data to clear");
       });
   };
   return (

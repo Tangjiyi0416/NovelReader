@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Text,
@@ -417,45 +417,98 @@ export default function BookImportScreen({ navigation, route }) {
   );
 
   function SaveButton() {
+    const [saving, setSaving] = useState(false);
     const bookData = useSelector(selectBookImportData);
     function saveBook() {
-      const path = FileSystem.documentDirectory + "books/";
-      FileSystem.deleteAsync(path + bookData.title + ".txt", {
-        idempotent: true,
-      }).then(() => {
-        FileSystem.copyAsync({
-          from: bookData.uri,
-          to: path,
+      setSaving(true);
+      const path =
+        FileSystem.documentDirectory + "books/" + bookData.title + ".txt";
+      let content;
+      let indexes = [];
+      FileSystem.readAsStringAsync(bookData.uri)
+        .catch(() => {
+          console.log("reading faild.");
         })
-          .then(() => {
-            console.log("book copied successed.");
-          })
-          .catch(() => {
-            console.log("book exited.");
-          })
-          .finally(() => {
-            FileSystem.moveAsync({
-              from: path + route.params.documentResult.name,
-              to: path + bookData.title + ".txt",
-            }).then(() => {
-              dispatch(
-                addBook({
-                  ...bookData,
-                  uri: path + bookData.title + ".txt",
-                  time: Date.now(),
-                })
-              );
-              // FileSystem.readAsStringAsync(path + bookData.title + ".txt").then(
-              //   (value) => {
-              //     const lines = value.split("\n").length;
-              //     console.log(lines);
-              //   }
-              // );
-              console.log("info updated.");
-              navigation.goBack();
-            });
+        .then((result) => {
+          content = result
+            .split("\n")
+            .filter((line) => line[0] != "\r" && line[0] != "\n");
+          let chpaterTest = new RegExp(
+            `^[ 　	]*${bookData.chapterDisplay.pre}.+${bookData.chapterDisplay.suf}[ ]`
+          );
+          let sectionTest = new RegExp(
+            `^[ 　	]*${bookData.sectionDisplay.pre}.+${bookData.sectionDisplay.suf}[ ]`
+          );
+          // console.log(chpaterTest.source);
+          content.forEach((line, index) => {
+            // console.log(line);
+            if (bookData.chapterDisplay && chpaterTest.test(line)) {
+              // currentChapter = index;
+              // indexes[currentChapter] = [];
+              indexes.push([index]);
+            } else if (bookData.sectionDisplay && sectionTest.test(line)) {
+              // indexes[currentChapter].push(index);
+              indexes[indexes.length - 1].push(index);
+            }
           });
-      });
+        })
+        .catch(() => {
+          console.log("index parsing faild");
+        })
+        .then(() => {
+          FileSystem.makeDirectoryAsync(
+            FileSystem.documentDirectory + "books/",
+            {
+              intermediates: true,
+            }
+          ).then(() => {
+            FileSystem.writeAsStringAsync(path, content.join("\n"))
+              .catch(() => console.log("saving faild."))
+              .then(() => {
+                dispatch(
+                  addBook({
+                    ...bookData,
+                    totalLines: content.length,
+                    indexes: indexes,
+                    uri: path,
+                    time: Date.now(),
+                  })
+                );
+                console.log(bookData);
+                console.log("info updated.");
+                navigation.goBack();
+              });
+          });
+
+          //   FileSystem.copyAsync({
+          //     from: bookData.uri,
+          //     to: path,
+          //   })
+          //     .then(() => {
+          //       console.log("book copied successed.");
+          //     })
+          //     .catch(() => {
+          //       console.log("book exited.");
+          //     })
+          //     .finally(() => {
+          //       FileSystem.moveAsync({
+          //         from: path + route.params.documentResult.name,
+          //         to: path + bookData.title + ".txt",
+          //       }).then(() => {
+          //         dispatch(
+          //           addBook({
+          //             ...bookData,
+          //             uri: path + bookData.title + ".txt",
+          //             time: Date.now(),
+          //           })
+          //         );
+
+          //         console.log("info updated.");
+          //         navigation.goBack();
+          //       });
+          //     });
+          // });
+        });
     }
     return (
       <Button
@@ -465,7 +518,8 @@ export default function BookImportScreen({ navigation, route }) {
         mr={4}
         _light={{ colorScheme: "primary" }}
         _dark={{ colorScheme: "darkPrimary" }}
-        onPress={saveBook}
+        onPress={!saving ? saveBook : null}
+        // onPress={saveBook}
       >
         <Text
           mx={1}
@@ -473,7 +527,8 @@ export default function BookImportScreen({ navigation, route }) {
           _light={{ color: "myColors.light30" }}
           _dark={{ color: "myColors.dark30" }}
         >
-          儲存
+          {saving ? "儲存中..." : "儲存"}
+          {/* 儲存 */}
         </Text>
       </Button>
     );
@@ -512,7 +567,16 @@ export default function BookImportScreen({ navigation, route }) {
         tags: [],
         cover:
           "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
-        chapterDisplay: {},
+        chapterDisplay: {
+          pre: "第",
+          num: "一",
+          suf: "卷",
+        },
+        sectionDisplay: {
+          pre: "第",
+          num: "一",
+          suf: "章",
+        },
         uri: route.params.documentResult.uri,
         indexing: null,
       })
