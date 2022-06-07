@@ -84,6 +84,7 @@ export default function BookButton({
     let min = 0,
       max = arr.length - 1;
     while (min != max) {
+      // console.log(min);
       let mid = Math.floor((min + max) / 2);
       if (arr[mid] == target) return mid;
       else if (arr[mid] > target) {
@@ -95,15 +96,16 @@ export default function BookButton({
     if (arr[min] > target) return min > 1 ? min - 1 : 0;
     else return min;
   };
-  // useEffect(() => {
-  //   const chs = bookData.indexes.map((x) => x[0]);
-  //   const ch = binarySearch(chs, bookData.progress);
-  //   setChapter(ch + 1);
-  //   console.log(bookData.indexes[ch]);
-  //   // const sec = binarySearch(bookData.indexes[ch], bookData.progress);
-  //   //   setSection(binarySearch(bookData.indexes[ch], bookData.progress) + 1);
-  //   //   console.log(section + 1);
-  // }, []);
+  useEffect(() => {
+    const chs = bookData.indexes.map((x) => x[0]);
+    // console.log(chs);
+    const ch = binarySearch(chs, bookData.progress);
+    setChapter(ch + 1);
+    // console.log(bookData.indexes[ch]);
+    const sec = binarySearch(bookData.indexes[ch], bookData.progress);
+    setSection(sec);
+    // console.log(section + 1);
+  }, [bookData]);
   const ProgressDisplay = () => {
     return (
       <Flex

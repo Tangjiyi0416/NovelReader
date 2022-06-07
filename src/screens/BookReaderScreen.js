@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -137,14 +137,27 @@ export default function BookReaderScreen({ route, navigation }) {
   const [indexes, setIndexes] = useState([]);
   const [showOverlay, setOverlay] = useState(false);
   const [overlayMenuIndex, setOverlayMenuIndex] = useState(0);
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const currentLine = useRef(0);
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
   const bookList = useSelector(selectBookList);
   const mainList = useRef(null);
   const indexList = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("beforeRemove", () => {
+      dispatch(
+        addBook({
+          title: route.params.book.title,
+          progress: currentLine.current,
+        })
+      );
+      // console.log("leaving");
+    });
+    return unsubscribe;
+  }, [navigation]);
+  useEffect(() => {
     const bookData = route.params.book;
     FileSystem.readAsStringAsync(bookData.uri)
       .catch(() => {
@@ -185,7 +198,7 @@ export default function BookReaderScreen({ route, navigation }) {
       <Pressable
         onPress={() => {
           // mainList.current.scrollToEnd({ animated: true });
-          console.log(item.index);
+          // console.log(item.index);
           mainList.current.scrollToIndex({
             index: item.index,
             viewPosition: 0,
@@ -200,13 +213,8 @@ export default function BookReaderScreen({ route, navigation }) {
     // console.log("=========================================================");
     const line = changed.reverse().find((p) => !p.isViewable);
     if (line) {
-      console.log(line);
-      dispatch(
-        addBook({
-          title: route.params.book.title,
-          progress: line.index,
-        })
-      );
+      currentLine.current = line.index;
+      // setCurrentLine(() => line.index);
     }
   }, []);
   return (

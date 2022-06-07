@@ -474,7 +474,7 @@ export default function BookImportScreen({ navigation, route }) {
                     time: Date.now(),
                   })
                 );
-                console.log(bookData);
+                // console.log(bookData);
                 console.log("info updated.");
                 navigation.goBack();
               });
