@@ -6,6 +6,7 @@ import bookListReducer from "./bookListSlice";
 import bookImportDataReducer from "./bookImportDataSlice";
 import viewSettingReducer from "./viewSettingSlice";
 import lastReadReducer from "./lastReadSlice";
+import tagsReducer from "./tagsSlice";
 export const store = configureStore({
   reducer: {
     bookList: persistReducer(
@@ -21,6 +22,13 @@ export const store = configureStore({
         storage: AsyncStorage,
       },
       lastReadReducer
+    ),
+    tags: persistReducer(
+      {
+        key: "root/tags",
+        storage: AsyncStorage,
+      },
+      tagsReducer
     ),
     settings: persistReducer(
       {

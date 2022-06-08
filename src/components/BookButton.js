@@ -75,7 +75,7 @@ export function DetailedBookButton({ bookData, height, ...props }) {
         borderWidth={1}
         px={"8px"}
         py={"2px"}
-        mx={1}
+        mr={1}
         borderRadius={4}
         _light={{ borderColor: "myColors.lightText" }}
         _dark={{ borderColor: "myColors.darkText" }}
@@ -89,7 +89,7 @@ export function DetailedBookButton({ bookData, height, ...props }) {
       </Box>
     );
   };
-  const itemSeparatorComponent = () => <Box my={1} height={1}></Box>;
+  const itemSeparatorComponent = () => <Box height={1.5}></Box>;
   return (
     <Pressable
       onPress={() => navigation.navigate("BookReader", { book: bookData })}
@@ -125,11 +125,12 @@ export function DetailedBookButton({ bookData, height, ...props }) {
           <Box my={1} height={1}></Box>
           <ProgressDisplay />
           <Text fontSize={18}>{`進度： ${(
-            (bookData.latestLine * 100 ?? 0) / bookData.totalLines
+            ((bookData.latestLine ?? 0) * 100) /
+            bookData.totalLines
           ).toFixed(2)}%`}</Text>
           <Box my={1} height={1}></Box>
           <FlatList
-            data={["awda", "awdawdfe", "ssssss", "dgdrdrt"]}
+            data={bookData.tags}
             numColumns={2}
             key={2}
             keyExtractor={(item, index) => index}
@@ -193,7 +194,6 @@ export default function BookButton({
       </Flex>
     );
   };
-  6 / 17;
   return (
     <Pressable
       onPress={() => navigation.navigate("BookReader", { book: bookData })}

@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Text,
-  FlatList,
-  Icon,
-  Slide,
-  SlideFade,
-} from "native-base";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Box, Button, Text, FlatList } from "native-base";
 import { DetailedBookButton } from "../components/BookButton";
 import { useSelector } from "react-redux";
 import { selectBookList } from "../redux/bookListSlice";
@@ -49,6 +39,49 @@ export default function BookShelfScreen({ route, navigation }) {
   const book = ({ item }) => (
     <DetailedBookButton mx={4} my={2} flex={1} height={250} bookData={item} />
   );
+  const TagButton = ({ item }) => {
+    const [isSelected, setSelected] = useState();
+    return (
+      <Button
+        variant="outline"
+        mx={2}
+        _light={{
+          backgroundColor: isSelected ? "myColors.light10" : "transparent",
+          borderColor: "myColors.light10",
+          _pressed: {
+            backgroundColor: "myColors.light10",
+            borderColor: "myColors.light10",
+            opacity: 0.6,
+          },
+        }}
+        _dark={{
+          borderColor: "myColors.dark10",
+          _pressed: {
+            backgroundColor: "myColors.dark10",
+            borderColor: "myColors.dark10",
+            opacity: 0.6,
+          },
+        }}
+        onPress={() => {
+          setSelected(!isSelected);
+        }}
+      >
+        <Text
+          _light={{
+            color: isSelected ? "myColors.light30" : "myColors.lightText",
+          }}
+          _dark={{
+            color: isSelected ? "myColors.dark30" : "myColors.darkText",
+          }}
+          fontSize={18}
+          lineHeight={30}
+        >
+          {item}
+        </Text>
+      </Button>
+    );
+  };
+  const renderTag = ({ item }) => <TagButton item={item} />;
   return (
     <Box
       flex={1}
@@ -62,17 +95,7 @@ export default function BookShelfScreen({ route, navigation }) {
           flexGrow={0}
           data={["Psychological Horror", "Sci-fi", "Short"]}
           keyExtractor={(item) => item}
-          renderItem={({ item }) => (
-            <Button colorScheme="primary" mx={2}>
-              <Text
-                _light={{ color: "myColors.light30" }}
-                _dark={{ color: "myColors.light60" }}
-                fontSize={18}
-              >
-                {item}
-              </Text>
-            </Button>
-          )}
+          renderItem={renderTag}
           showsHorizontalScrollIndicator={false}
         />
         <FlatList
