@@ -106,6 +106,7 @@ export default function TabBar({ navigation }) {
         },
         headerLeft: leftButton,
         headerRight: rightButton,
+        lazy: false,
       }}
     >
       <TabNav.Screen
