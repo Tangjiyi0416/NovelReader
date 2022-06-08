@@ -1,38 +1,95 @@
-import { Box, Center, Flex, Image, Text, Pressable } from "native-base";
+import {
+  Box,
+  Center,
+  Flex,
+  Image,
+  Text,
+  Pressable,
+  FlatList,
+  Divider,
+} from "native-base";
 import React, { useState, useEffect } from "react";
 import { toWords } from "number-to-chinese-words";
 import { useNavigation } from "@react-navigation/native";
-export function DetailedBookButton({ bookData, width, height, ...props }) {
+const binarySearch = (arr, target) => {
+  try {
+    let min = 0,
+      max = arr.length - 1;
+    while (min != max) {
+      // console.log(min);
+      let mid = Math.floor((min + max) / 2);
+      if (arr[mid] == target) return mid;
+      else if (arr[mid] > target) {
+        max = mid - 1;
+      } else {
+        min = mid + 1;
+      }
+    }
+    if (arr[min] > target) return min > 1 ? min - 1 : 0;
+    else return min;
+  } catch (e) {
+    console.log(e);
+  }
+};
+export function DetailedBookButton({ bookData, height, ...props }) {
   const navigation = useNavigation();
+  const [chapter, setChapter] = useState(0);
+  const [section, setSection] = useState(0);
 
-  const ProgressDisplay = () => {
+  useEffect(() => {
+    const chs = bookData.indexes.map((x) => x[0]);
+    const ch = binarySearch(chs, bookData.progress);
+    setChapter(ch + 1);
+    // console.log(bookData.indexes[ch]);
+    const sec = binarySearch(bookData.indexes[ch], bookData.progress);
+    setSection(sec + 1);
+    // console.log(section + 1);
+  }, [bookData]);
+  const ProgressDisplay = ({ ...props }) => {
     return (
-      <Flex direction={"row"} align="center" opacity={0.5} w="100%">
-        {bookData.progress ? (
-          <Text mx={2} fontSize={20}>
+      <Flex direction={"row"} {...props}>
+        {bookData.progress || bookData.progress == 0 ? (
+          <Text fontSize={18}>
+            {"上次看到： "}
             {bookData.chapterDisplay?.pre ?? null}
-            {bookData.chapterDisplay?.num == "一"
-              ? toWords(bookData.progress)
-              : bookData.progress}
+            {bookData.chapterDisplay?.num == "一" ? toWords(chapter) : chapter}
             {bookData.chapterDisplay?.suf ?? null}
           </Text>
         ) : (
-          <Text mx={2} fontSize={20}>
-            未閱讀
-          </Text>
+          <Text fontSize={20}>未閱讀</Text>
         )}
-        {bookData.progress ? (
-          <Text mx={2} fontSize={20}>
+        {bookData.progress || bookData.progress == 0 ? (
+          <Text ml={2} fontSize={18}>
             {bookData.sectionDisplay?.pre ?? null}
-            {bookData.sectionDisplay?.num == "一"
-              ? toWords(bookData.progress)
-              : bookData.progress}
+            {bookData.sectionDisplay?.num == "一" ? toWords(section) : section}
             {bookData.sectionDisplay?.suf ?? null}
           </Text>
         ) : null}
       </Flex>
     );
   };
+
+  const renderTags = ({ item }) => {
+    return (
+      <Box
+        borderWidth={1}
+        px={"8px"}
+        py={"2px"}
+        mx={1}
+        borderRadius={4}
+        _light={{ borderColor: "myColors.lightText" }}
+        _dark={{ borderColor: "myColors.darkText" }}
+      >
+        <Text
+          _light={{ borderColor: "myColors.lightText" }}
+          _dark={{ borderColor: "myColors.darkText" }}
+        >
+          {item}
+        </Text>
+      </Box>
+    );
+  };
+  const itemSeparatorComponent = () => <Box my={1} height={1}></Box>;
   return (
     <Pressable
       onPress={() => navigation.navigate("BookReader", { book: bookData })}
@@ -40,8 +97,9 @@ export function DetailedBookButton({ bookData, width, height, ...props }) {
     >
       <Flex
         shadow={3}
-        w={width}
+        py={2}
         h={height}
+        direction={"row"}
         _light={{ bgColor: "myColors.lightCard" }}
         _dark={{ bgColor: "myColors.darkCard" }}
         borderRadius={6}
@@ -55,15 +113,29 @@ export function DetailedBookButton({ bookData, width, height, ...props }) {
               bookData.cover ??
               "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
           }}
-          width={112}
-          height={160}
+          width="36%"
+          height={undefined}
+          aspectRatio={0.7}
           alt="book cover"
         />
-        <Flex direction="column" align="center">
-          <Text numberOfLines={1} fontSize={22}>
+        <Flex w={"50%"} direction="column">
+          <Text alignSelf={"center"} numberOfLines={1} fontSize={22}>
             {bookData.title}
           </Text>
+          <Box my={1} height={1}></Box>
           <ProgressDisplay />
+          <Text fontSize={18}>{`進度： ${(
+            (bookData.latestLine * 100 ?? 0) / bookData.totalLines
+          ).toFixed(2)}%`}</Text>
+          <Box my={1} height={1}></Box>
+          <FlatList
+            data={["awda", "awdawdfe", "ssssss", "dgdrdrt"]}
+            numColumns={2}
+            key={2}
+            keyExtractor={(item, index) => index}
+            renderItem={renderTags}
+            ItemSeparatorComponent={itemSeparatorComponent}
+          />
         </Flex>
       </Flex>
     </Pressable>
@@ -80,31 +152,17 @@ export default function BookButton({
   const navigation = useNavigation();
   const [chapter, setChapter] = useState(0);
   const [section, setSection] = useState(0);
-  const binarySearch = (arr, target) => {
-    let min = 0,
-      max = arr.length - 1;
-    while (min != max) {
-      // console.log(min);
-      let mid = Math.floor((min + max) / 2);
-      if (arr[mid] == target) return mid;
-      else if (arr[mid] > target) {
-        max = mid - 1;
-      } else {
-        min = mid + 1;
-      }
-    }
-    if (arr[min] > target) return min > 1 ? min - 1 : 0;
-    else return min;
-  };
+
   useEffect(() => {
     const chs = bookData.indexes.map((x) => x[0]);
-    // console.log(chs);
+    //   // console.log(chs);
     const ch = binarySearch(chs, bookData.progress);
     setChapter(ch + 1);
-    // console.log(bookData.indexes[ch]);
+    //   // console.log(bookData.indexes[ch]);
     const sec = binarySearch(bookData.indexes[ch], bookData.progress);
-    setSection(sec);
-    // console.log(section + 1);
+    setSection(sec + 1);
+    //   // console.log(section + 1);
+    // }, []);
   }, [bookData]);
   const ProgressDisplay = () => {
     return (
@@ -114,7 +172,7 @@ export default function BookButton({
         opacity={0.5}
         w="100%"
       >
-        {bookData.progress ? (
+        {bookData.progress || bookData.progress == 0 ? (
           <Text mx={2} fontSize={20}>
             {bookData.chapterDisplay?.pre ?? null}
             {bookData.chapterDisplay?.num == "一" ? toWords(chapter) : chapter}
@@ -125,7 +183,7 @@ export default function BookButton({
             未閱讀
           </Text>
         )}
-        {bookData.progress ? (
+        {bookData.progress || bookData.progress == 0 ? (
           <Text mx={2} fontSize={20}>
             {bookData.sectionDisplay?.pre ?? null}
             {bookData.sectionDisplay?.num == "一" ? toWords(section) : section}
@@ -135,6 +193,7 @@ export default function BookButton({
       </Flex>
     );
   };
+  6 / 17;
   return (
     <Pressable
       onPress={() => navigation.navigate("BookReader", { book: bookData })}
@@ -160,8 +219,9 @@ export default function BookButton({
               bookData.cover ??
               "https://raw.githubusercontent.com/Tangjiyi0416/app-wk3/main/img/img_book_tbos.png",
           }}
-          width={112}
-          height={160}
+          width={styleType == 1 ? "36%" : "70%"}
+          height={undefined}
+          aspectRatio={0.7}
           alt="book cover"
         />
         <Flex

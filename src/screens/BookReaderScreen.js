@@ -17,7 +17,6 @@ import {
 import ActiveButton from "../components/ActiveButton";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
-import TransButton from "../components/TransButton";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSettings, setSettings } from "../redux/viewSettingSlice";
 import { setLastRead } from "../redux/lastReadSlice";
@@ -138,7 +137,9 @@ export default function BookReaderScreen({ route, navigation }) {
   const [showOverlay, setOverlay] = useState(false);
   const [overlayMenuIndex, setOverlayMenuIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const currentLine = useRef(0);
+  const latestLine = useRef(0);
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
   const bookList = useSelector(selectBookList);
@@ -151,6 +152,7 @@ export default function BookReaderScreen({ route, navigation }) {
         addBook({
           title: route.params.book.title,
           progress: currentLine.current,
+          latestLine: latestLine.current + 1,
         })
       );
       // console.log("leaving");
@@ -159,6 +161,7 @@ export default function BookReaderScreen({ route, navigation }) {
   }, [navigation]);
   useEffect(() => {
     const bookData = route.params.book;
+    // console.log(bookData);
     FileSystem.readAsStringAsync(bookData.uri)
       .catch(() => {
         setContent([
@@ -176,13 +179,15 @@ export default function BookReaderScreen({ route, navigation }) {
           return { line: content[index], index: index };
         });
         setIndexes(inds);
-        mainList.current.scrollToIndex({
+        mainList.current?.scrollToIndex({
           index: bookList[bookData.title].progress ?? 0,
           viewPosition: 0,
         });
+        // console.log(bookData);
         dispatch(setLastRead(bookData.title));
       })
-      .catch(() => console.log("index parsing faild"));
+      .catch(() => console.log("index parsing faild"))
+      .then(console.log("loading successd"));
   }, []);
   const toggleOverlay = () => {
     // console.log("adw");
@@ -209,13 +214,20 @@ export default function BookReaderScreen({ route, navigation }) {
       </Pressable>
     );
   };
-  const onViewableItemsChanged = useCallback(function ({ changed }) {
+  const listFooterComponent = () => {
+    // return <Spinner size={110} accessibilityLabel="Loading posts" />;
+    return isLoading ? (
+      <Spinner size={110} accessibilityLabel="Loading posts" />
+    ) : null;
+  };
+  const onViewableItemsChanged = useCallback(function ({ viewableItems }) {
     // console.log("=========================================================");
-    const line = changed.reverse().find((p) => !p.isViewable);
-    if (line) {
-      currentLine.current = line.index;
-      // setCurrentLine(() => line.index);
-    }
+    if (!viewableItems.length) return;
+    currentLine.current = viewableItems[0].index;
+    latestLine.current = viewableItems[viewableItems.length - 1].index;
+    if (latestLine.current < route.params.book.totalLines - 1)
+      setIsLoading(false);
+    // console.log(viewableItems[viewableItems.length - 1]);
   }, []);
   return (
     <Box
@@ -224,14 +236,10 @@ export default function BookReaderScreen({ route, navigation }) {
       _light={{ bg: "myColors.light60" }}
       _dark={{ bg: "myColors.dark60" }}
     >
-      {/* <Pressable flex={1} onPress={toggleOverlay}> */}
-      {/* <Center flex={1}> */}
       <FlatList
         ref={mainList}
         onTouchEnd={toggleOverlay}
-        ListFooterComponent={() => (
-          <Spinner size={110} accessibilityLabel="Loading posts" />
-        )}
+        ListFooterComponent={listFooterComponent}
         maxToRenderPerBatch={100}
         // updateCellsBatchingPeriod={500}
         data={content}
@@ -240,30 +248,17 @@ export default function BookReaderScreen({ route, navigation }) {
         px={`${settings.px}px`}
         width={"100%"}
         flex={1}
-        viewabilityConfig={{ itemVisiblePercentThreshold: 100 }}
+        viewabilityConfig={{ itemVisiblePercentThreshold: 98 }}
         onViewableItemsChanged={onViewableItemsChanged}
         onScrollToIndexFailed={({ index, averageItemLength }) => {
-          mainList.current.scrollToOffset({
+          mainList.current?.scrollToOffset({
             offset: averageItemLength * index,
           });
           setTimeout(() => {
-            mainList.current.scrollToIndex({ index: index });
+            mainList.current?.scrollToIndex({ index: index });
           }, 200);
         }}
       />
-      {/* </Center> */}
-      {/* <Divider
-            mt={4}
-            _light={{ bg: "myColors.light60" }}
-            _dark={{ bg: "myColors.dark60" }}
-          /> */}
-
-      {/* <Divider
-            mt={8}
-            _light={{ bg: "myColors.light60" }}
-            _dark={{ bg: "myColors.dark60" }}
-          /> */}
-      {/* </Pressable> */}
       {showOverlay ? (
         <ActiveButton
           position="absolute"

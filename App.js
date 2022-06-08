@@ -1,13 +1,6 @@
 import "react-native-gesture-handler";
 import * as React from "react";
-import {
-  Text,
-  Button,
-  NativeBaseProvider,
-  HStack,
-  useColorMode,
-  StatusBar,
-} from "native-base";
+import { NativeBaseProvider, StatusBar } from "native-base";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";

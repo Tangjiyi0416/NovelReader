@@ -1,18 +1,11 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Text,
-  useColorMode,
-  ScrollView,
-  VStack,
-  Divider,
-} from "native-base";
+import { Box, Button, Text, ScrollView, VStack, Divider } from "native-base";
 import * as FileSystem from "expo-file-system";
 import { useDispatch } from "react-redux";
 import { clearBookList } from "../redux/bookListSlice";
 import { resetSettings } from "../redux/viewSettingSlice";
 import { setLastRead } from "../redux/lastReadSlice";
+import { useColorMode } from "native-base";
 export default function SettingsScreen() {
   const { toggleColorMode } = useColorMode();
   const dispatch = useDispatch();
@@ -51,28 +44,42 @@ export default function SettingsScreen() {
           _light={{ bgColor: "myColors.lightCard" }}
           _dark={{ bgColor: "myColors.darkCard" }}
         >
-          <Button onPress={toggleColorMode}>
+          <Button
+            onPress={toggleColorMode}
+            _dark={{ bgColor: "myColors.dark10" }}
+          >
             <Text
               _light={{ color: "myColors.light30" }}
-              _dark={{ color: "myColors.light30" }}
+              _dark={{ color: "myColors.dark30" }}
             >
               Color Mode
             </Text>
           </Button>
-          <Divider h={5} />
-          <Button onPress={ClearAllData}>
+          <Divider
+            h={5}
+            _light={{ bgColor: "myColors.lightCard" }}
+            _dark={{ bgColor: "myColors.darkCard" }}
+          />
+          <Button onPress={ClearAllData} _dark={{ bgColor: "myColors.dark10" }}>
             <Text
               _light={{ color: "myColors.light30" }}
-              _dark={{ color: "myColors.light30" }}
+              _dark={{ color: "myColors.dark30" }}
             >
               Clear all Data
             </Text>
           </Button>
-          <Divider h={5} />
-          <Button onPress={() => dispatch(resetSettings())}>
+          <Divider
+            h={5}
+            _light={{ bgColor: "myColors.lightCard" }}
+            _dark={{ bgColor: "myColors.darkCard" }}
+          />
+          <Button
+            onPress={() => dispatch(resetSettings())}
+            _dark={{ bgColor: "myColors.dark10" }}
+          >
             <Text
               _light={{ color: "myColors.light30" }}
-              _dark={{ color: "myColors.light30" }}
+              _dark={{ color: "myColors.dark30" }}
             >
               Reset View Settings
             </Text>

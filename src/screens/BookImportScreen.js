@@ -25,10 +25,10 @@ import {
   setBookData,
 } from "../redux/bookImportDataSlice";
 import { addBook } from "../redux/bookListSlice";
+// import SelectionList from "../components/SeletionList";
 
 const FirstRoute = () => {
   const { colorMode } = useColorMode();
-
   const bookData = useSelector(selectBookImportData);
   const dispatch = useDispatch();
   return bookData ? (
@@ -125,6 +125,7 @@ const FirstRoute = () => {
             dispatch(setBookData({ desc: value }));
           }}
         />
+        {/* <SelectionList /> */}
         <FormControl.Label m={0}>
           <Text fontSize={20}>標籤</Text>
         </FormControl.Label>
@@ -201,11 +202,13 @@ const SecondRoute = () => {
         <FormControl.Label m={0}>
           <Text fontSize={20}>一級目錄顯示格式</Text>
         </FormControl.Label>
-        <HStack>
+        <HStack alignItems={"center"}>
           <FormControl.Label m={0}>
             <Text fontSize={12}>前綴</Text>
           </FormControl.Label>
           <Input
+            ml={1}
+            mr={2}
             value={bookData?.chapterDisplay?.pre}
             flex={1}
             placeholder={"第"}
@@ -221,6 +224,8 @@ const SecondRoute = () => {
             <Text fontSize={12}>數</Text>
           </FormControl.Label>
           <Select
+            ml={1}
+            mr={2}
             flex={1}
             key="chpaterNum"
             variant="underlined"
@@ -249,6 +254,8 @@ const SecondRoute = () => {
             <Text fontSize={12}>後綴</Text>
           </FormControl.Label>
           <Input
+            ml={1}
+            mr={2}
             value={bookData?.chapterDisplay?.suf}
             flex={1}
             placeholder={"卷"}
@@ -264,11 +271,13 @@ const SecondRoute = () => {
         <FormControl.Label m={0}>
           <Text fontSize={20}>二級目錄顯示格式</Text>
         </FormControl.Label>
-        <HStack>
+        <HStack alignItems={"center"}>
           <FormControl.Label m={0}>
             <Text fontSize={12}>前綴</Text>
           </FormControl.Label>
           <Input
+            ml={1}
+            mr={2}
             value={bookData?.sectionDisplay?.pre}
             flex={1}
             placeholder={"第"}
@@ -284,6 +293,8 @@ const SecondRoute = () => {
             <Text fontSize={12}>數</Text>
           </FormControl.Label>
           <Select
+            ml={1}
+            mr={2}
             flex={1}
             key="chpaterNum"
             variant="underlined"
@@ -312,6 +323,8 @@ const SecondRoute = () => {
             <Text fontSize={12}>後綴</Text>
           </FormControl.Label>
           <Input
+            ml={1}
+            mr={2}
             flex={1}
             value={bookData?.sectionDisplay?.suf}
             placeholder={"章"}
@@ -439,7 +452,7 @@ export default function BookImportScreen({ navigation, route }) {
           let sectionTest = new RegExp(
             `^[ 　	]*${bookData.sectionDisplay.pre}.+${bookData.sectionDisplay.suf}[ ]`
           );
-          // console.log(chpaterTest.source);
+          // console.log(content);
           content.forEach((line, index) => {
             // console.log(line);
             if (bookData.chapterDisplay && chpaterTest.test(line)) {
@@ -448,12 +461,14 @@ export default function BookImportScreen({ navigation, route }) {
               indexes.push([index]);
             } else if (bookData.sectionDisplay && sectionTest.test(line)) {
               // indexes[currentChapter].push(index);
+              if (indexes.length == 0) indexes.push([]);
               indexes[indexes.length - 1].push(index);
             }
           });
         })
         .catch(() => {
           console.log("index parsing faild");
+          setSaving(false);
         })
         .then(() => {
           FileSystem.makeDirectoryAsync(
