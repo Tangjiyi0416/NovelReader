@@ -217,7 +217,12 @@ export default function BookReaderScreen({ route, navigation }) {
   const listFooterComponent = () => {
     // return <Spinner size={110} accessibilityLabel="Loading posts" />;
     return isLoading ? (
-      <Spinner size={110} accessibilityLabel="Loading posts" />
+      <Spinner
+        size={110}
+        accessibilityLabel="Loading posts"
+        _light={{ color: "primary.500" }}
+        _dark={{ color: "darkPrimary.500" }}
+      />
     ) : null;
   };
   const onViewableItemsChanged = useCallback(function ({ viewableItems }) {

@@ -173,7 +173,7 @@ const SecondRoute = () => {
         _light={{ bgColor: "myColors.lightCard" }}
         _dark={{ bgColor: "myColors.darkCard" }}
       >
-        <FormControl.Label m={0}>
+        {/* <FormControl.Label m={0}>
           <Text fontSize={20}>目錄辨識方法</Text>
         </FormControl.Label>
         <Select
@@ -198,7 +198,7 @@ const SecondRoute = () => {
           <Select.Item label="辨識法3" value="3" />
           <Select.Item label="辨識法4" value="4" />
           <Select.Item label="辨識法5" value="5" />
-        </Select>
+        </Select> */}
         <FormControl.Label m={0}>
           <Text fontSize={20}>一級目錄顯示格式</Text>
         </FormControl.Label>
@@ -349,18 +349,27 @@ const SecondRoute = () => {
         _light={{ bgColor: "myColors.lightCard" }}
         _dark={{ bgColor: "myColors.darkCard" }}
       >
-        <Button flex={1} mr={4}>
+        <Button
+          flex={1}
+          mr={4}
+          _light={{ colorScheme: "primary" }}
+          _dark={{ colorScheme: "darkPrimary" }}
+        >
           <Text
             _light={{ color: "myColors.light30" }}
-            _dark={{ color: "myColors.light60" }}
+            _dark={{ color: "myColors.dark30" }}
           >
             簡轉繁
           </Text>
         </Button>
-        <Button flex={1}>
+        <Button
+          flex={1}
+          _light={{ colorScheme: "primary" }}
+          _dark={{ colorScheme: "darkPrimary" }}
+        >
           <Text
             _light={{ color: "myColors.light30" }}
-            _dark={{ color: "myColors.light60" }}
+            _dark={{ color: "myColors.dark30" }}
           >
             繁轉簡
           </Text>
@@ -377,18 +386,27 @@ const SecondRoute = () => {
         _light={{ bgColor: "myColors.lightCard" }}
         _dark={{ bgColor: "myColors.darkCard" }}
       >
-        <Button flex={1} mr={4}>
+        <Button
+          flex={1}
+          mr={4}
+          _light={{ colorScheme: "primary" }}
+          _dark={{ colorScheme: "darkPrimary" }}
+        >
           <Text
             _light={{ color: "myColors.light30" }}
-            _dark={{ color: "myColors.light60" }}
+            _dark={{ color: "myColors.dark30" }}
           >
             GBK to UTF-8
           </Text>
         </Button>
-        <Button flex={1}>
+        <Button
+          flex={1}
+          _light={{ colorScheme: "primary" }}
+          _dark={{ colorScheme: "darkPrimary" }}
+        >
           <Text
             _light={{ color: "myColors.light30" }}
-            _dark={{ color: "myColors.light60" }}
+            _dark={{ color: "myColors.dark30" }}
           >
             Big5 to UTF-8
           </Text>

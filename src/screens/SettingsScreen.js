@@ -46,7 +46,8 @@ export default function SettingsScreen() {
         >
           <Button
             onPress={toggleColorMode}
-            _dark={{ bgColor: "myColors.dark10" }}
+            _light={{ colorScheme: "primary" }}
+            _dark={{ colorScheme: "darkPrimary" }}
           >
             <Text
               _light={{ color: "myColors.light30" }}
@@ -60,7 +61,11 @@ export default function SettingsScreen() {
             _light={{ bgColor: "myColors.lightCard" }}
             _dark={{ bgColor: "myColors.darkCard" }}
           />
-          <Button onPress={ClearAllData} _dark={{ bgColor: "myColors.dark10" }}>
+          <Button
+            onPress={ClearAllData}
+            _light={{ colorScheme: "primary" }}
+            _dark={{ colorScheme: "darkPrimary" }}
+          >
             <Text
               _light={{ color: "myColors.light30" }}
               _dark={{ color: "myColors.dark30" }}
@@ -75,7 +80,8 @@ export default function SettingsScreen() {
           />
           <Button
             onPress={() => dispatch(resetSettings())}
-            _dark={{ bgColor: "myColors.dark10" }}
+            _light={{ colorScheme: "primary" }}
+            _dark={{ colorScheme: "darkPrimary" }}
           >
             <Text
               _light={{ color: "myColors.light30" }}
