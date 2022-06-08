@@ -70,9 +70,12 @@ export default function SelectionList() {
     setList((prevList) => {
       const newList = [...prevList];
       newList[index].isChecked = !newList[index].isChecked;
+      const tags = newList
+        .filter((x) => x.isChecked)
+        .map((value) => value.title);
       dispatch(
         setBookData({
-          tags: newList.filter((x) => x.isChecked).map((value) => value.title),
+          tags: tags,
         })
       );
       return newList;

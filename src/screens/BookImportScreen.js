@@ -25,7 +25,7 @@ import {
   setBookData,
 } from "../redux/bookImportDataSlice";
 import { addBook } from "../redux/bookListSlice";
-// import SelectionList from "../components/SeletionList";
+import SelectionList from "../components/SeletionList";
 
 const FirstRoute = () => {
   const { colorMode } = useColorMode();
@@ -125,8 +125,8 @@ const FirstRoute = () => {
             dispatch(setBookData({ desc: value }));
           }}
         />
-        {/* <SelectionList /> */}
-        <FormControl.Label m={0}>
+        <SelectionList />
+        {/* <FormControl.Label m={0}>
           <Text fontSize={20}>標籤</Text>
         </FormControl.Label>
         <Select
@@ -151,7 +151,7 @@ const FirstRoute = () => {
           <Select.Item key={"s3"} label="將來可自定義的標簽3" value="tag3" />
           <Select.Item key={"s4"} label="將來可自定義的標簽4" value="tag4" />
           <Select.Item key={"s5"} label="將來可自定義的標簽5" value="tag5" />
-        </Select>
+        </Select> */}
       </VStack>
     </ScrollView>
   ) : null;
