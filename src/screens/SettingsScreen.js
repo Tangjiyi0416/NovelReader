@@ -6,6 +6,7 @@ import { clearBookList } from "../redux/bookListSlice";
 import { resetSettings } from "../redux/viewSettingSlice";
 import { setLastRead } from "../redux/lastReadSlice";
 import { useColorMode } from "native-base";
+import { clearTags } from "../redux/tagsSlice";
 export default function SettingsScreen() {
   const { toggleColorMode } = useColorMode();
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export default function SettingsScreen() {
       .then(() => {
         console.log("All data cleared.");
         dispatch(clearBookList());
+        dispatch(clearTags());
         dispatch(setLastRead(""));
       });
   };

@@ -18,6 +18,7 @@ import {
   selectBookImportData,
   setBookData,
 } from "../redux/bookImportDataSlice";
+import { addTags } from "../redux/tagsSlice";
 export default function SelectionList() {
   const instState = [
     {
@@ -78,6 +79,7 @@ export default function SelectionList() {
           tags: tags,
         })
       );
+      //   dispatch(addTags(tags));
       return newList;
     });
   };

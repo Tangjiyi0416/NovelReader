@@ -7,10 +7,17 @@ const tagsSlice = createSlice({
   initialState,
   reducers: {
     addTags: (state, action) => {
-      state.tags = state.tags.concat(action.payload);
+      action.payload.forEach((element) => {
+        if (state.tags.find(({ value }) => value === element) === undefined) {
+          state.tags.push(element);
+        }
+      });
+    },
+    clearTags: (state, action) => {
+      state.tags = [];
     },
   },
 });
 export const selectTags = (state) => state.tags.tags;
-export const { addTags } = tagsSlice.actions;
+export const { addTags, clearTags } = tagsSlice.actions;
 export default tagsSlice.reducer;

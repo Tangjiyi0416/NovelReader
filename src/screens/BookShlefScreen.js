@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, Text, FlatList } from "native-base";
 import { DetailedBookButton } from "../components/BookButton";
 import { useSelector } from "react-redux";
@@ -10,9 +10,13 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { selectTags } from "../redux/tagsSlice";
 export default function BookShelfScreen({ route, navigation }) {
   const bookList = useSelector(selectBookList);
   const [currentList, setCurrentList] = useState([]);
+  const currentTags = useRef();
+  currentTags.current = new Set();
+  const tagList = ["科幻", "奇幻", "高優先", "起點"];
   const offset = useSharedValue(0);
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [{ translateX: offset.value }],
@@ -39,6 +43,14 @@ export default function BookShelfScreen({ route, navigation }) {
   const book = ({ item }) => (
     <DetailedBookButton mx={4} my={2} flex={1} height={250} bookData={item} />
   );
+  useEffect(() => {
+    // const newList = Object.values(bookList).filter((value) => {
+    //   return value?.tags.some((element) => {
+    //     return currentTags.current.has(element);
+    //   });
+    // });
+    // setCurrentList(newList);
+  }, [currentTags.current.size]);
   const TagButton = ({ item }) => {
     const [isSelected, setSelected] = useState();
     return (
@@ -64,6 +76,13 @@ export default function BookShelfScreen({ route, navigation }) {
         }}
         onPress={() => {
           setSelected(!isSelected);
+          if (currentTags.current.has(item)) {
+            currentTags.current.delete(item);
+          } else {
+            currentTags.current.add(item);
+          }
+
+          console.log(currentTags.current);
         }}
       >
         <Text
@@ -93,13 +112,13 @@ export default function BookShelfScreen({ route, navigation }) {
           m={2}
           horizontal={true}
           flexGrow={0}
-          data={["Psychological Horror", "Sci-fi", "Short"]}
+          data={tagList}
           keyExtractor={(item) => item}
           renderItem={renderTag}
           showsHorizontalScrollIndicator={false}
         />
         <FlatList
-          mb={50} //tabbar height
+          mb={116} //tabbar height
           data={currentList}
           keyExtractor={(item, index) => index}
           renderItem={book}
