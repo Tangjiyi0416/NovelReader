@@ -13,6 +13,7 @@ import {
   FormControl,
   VStack,
   Select,
+  useToast,
 } from "native-base";
 import * as FileSystem from "expo-file-system";
 import TransButton from "../components/TransButton";
@@ -126,32 +127,6 @@ const FirstRoute = () => {
           }}
         />
         <SelectionList />
-        {/* <FormControl.Label m={0}>
-          <Text fontSize={20}>標籤</Text>
-        </FormControl.Label>
-        <Select
-          key="標籤"
-          variant="underlined"
-          fontSize={16}
-          selectedValue={bookData.tags[0]}
-          onValueChange={(value) => {
-            dispatch(setBookData({ tags: [value] }));
-          }}
-          accessibilityLabel="Choose a Tag"
-          placeholder="Choose a Tag"
-          _light={{ borderColor: "myColors.lightText" }}
-          _dark={{ borderColor: "myColors.darkText" }}
-          _selectedItem={{
-            bg: colorMode === "light" ? "primary.500" : "darkPrimary.500",
-          }}
-          mt={1}
-        >
-          <Select.Item key={"s1"} label="將來可自定義的標簽1" value="tag1" />
-          <Select.Item key={"s2"} label="將來可自定義的標簽2" value="tag2" />
-          <Select.Item key={"s3"} label="將來可自定義的標簽3" value="tag3" />
-          <Select.Item key={"s4"} label="將來可自定義的標簽4" value="tag4" />
-          <Select.Item key={"s5"} label="將來可自定義的標簽5" value="tag5" />
-        </Select> */}
       </VStack>
     </ScrollView>
   ) : null;
@@ -450,6 +425,7 @@ export default function BookImportScreen({ navigation, route }) {
   function SaveButton() {
     const [saving, setSaving] = useState(false);
     const bookData = useSelector(selectBookImportData);
+    const toast = useToast();
     function saveBook() {
       setSaving(true);
       const path =
@@ -458,7 +434,10 @@ export default function BookImportScreen({ navigation, route }) {
       let indexes = [];
       FileSystem.readAsStringAsync(bookData.uri)
         .catch(() => {
-          console.log("reading faild.");
+          toast.show({
+            description: "reading faild.",
+            bg: "danger.500",
+          });
         })
         .then((result) => {
           content = result
@@ -485,7 +464,10 @@ export default function BookImportScreen({ navigation, route }) {
           });
         })
         .catch(() => {
-          console.log("index parsing faild");
+          toast.show({
+            description: "index parsing faild",
+            bg: "danger.500",
+          });
           setSaving(false);
         })
         .then(() => {
@@ -512,35 +494,6 @@ export default function BookImportScreen({ navigation, route }) {
                 navigation.goBack();
               });
           });
-
-          //   FileSystem.copyAsync({
-          //     from: bookData.uri,
-          //     to: path,
-          //   })
-          //     .then(() => {
-          //       console.log("book copied successed.");
-          //     })
-          //     .catch(() => {
-          //       console.log("book exited.");
-          //     })
-          //     .finally(() => {
-          //       FileSystem.moveAsync({
-          //         from: path + route.params.documentResult.name,
-          //         to: path + bookData.title + ".txt",
-          //       }).then(() => {
-          //         dispatch(
-          //           addBook({
-          //             ...bookData,
-          //             uri: path + bookData.title + ".txt",
-          //             time: Date.now(),
-          //           })
-          //         );
-
-          //         console.log("info updated.");
-          //         navigation.goBack();
-          //       });
-          //     });
-          // });
         });
     }
     return (

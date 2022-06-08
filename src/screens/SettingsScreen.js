@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Button, Text, ScrollView, VStack, Divider } from "native-base";
+import {
+  Box,
+  Button,
+  Text,
+  ScrollView,
+  VStack,
+  Divider,
+  useToast,
+} from "native-base";
 import * as FileSystem from "expo-file-system";
 import { useDispatch } from "react-redux";
 import { clearBookList } from "../redux/bookListSlice";
@@ -9,18 +17,25 @@ import { useColorMode } from "native-base";
 import { clearTags } from "../redux/tagsSlice";
 export default function SettingsScreen() {
   const { toggleColorMode } = useColorMode();
+  const toast = useToast();
   const dispatch = useDispatch();
   const ClearAllData = () => {
     const path = FileSystem.documentDirectory;
     FileSystem.deleteAsync(path + "books")
       .catch(() => {
-        console.log("No data to clear");
+        toast.show({
+          description: "No data to clear.",
+          bg: "danger.500",
+        });
       })
       .then(() => {
-        console.log("All data cleared.");
         dispatch(clearBookList());
         dispatch(clearTags());
         dispatch(setLastRead(""));
+        toast.show({
+          description: "All data cleared.",
+          bg: "danger.500",
+        });
       });
   };
   return (
