@@ -38,9 +38,11 @@ export function DetailedBookButton({ bookData, height, ...props }) {
 
   useEffect(() => {
     const chs = bookData.indexes.map((x) => x[0]);
+    if (chs === undefined) return;
     const ch = binarySearch(chs, bookData.progress);
     setChapter(ch + 1);
     // console.log(bookData.indexes[ch]);
+    if (bookData.indexes[ch] === undefined) return;
     const sec = binarySearch(bookData.indexes[ch], bookData.progress);
     setSection(sec + 1);
     // console.log(section + 1);
@@ -49,17 +51,17 @@ export function DetailedBookButton({ bookData, height, ...props }) {
     return (
       <Flex direction={"row"} {...props}>
         {bookData.progress || bookData.progress == 0 ? (
-          <Text fontSize={18}>
+          <Text fontSize={[11, 18]}>
             {"上次看到： "}
             {bookData.chapterDisplay?.pre ?? null}
             {bookData.chapterDisplay?.num == "一" ? toWords(chapter) : chapter}
             {bookData.chapterDisplay?.suf ?? null}
           </Text>
         ) : (
-          <Text fontSize={20}>未閱讀</Text>
+          <Text fontSize={[13, 20]}>未閱讀</Text>
         )}
         {bookData.progress || bookData.progress == 0 ? (
-          <Text ml={2} fontSize={18}>
+          <Text ml={2} fontSize={[11, 18]}>
             {bookData.sectionDisplay?.pre ?? null}
             {bookData.sectionDisplay?.num == "一" ? toWords(section) : section}
             {bookData.sectionDisplay?.suf ?? null}
@@ -116,6 +118,7 @@ export function DetailedBookButton({ bookData, height, ...props }) {
           width="36%"
           height={undefined}
           aspectRatio={0.7}
+          alignSelf={"center"}
           alt="book cover"
         />
         <Flex w={"50%"} direction="column">
@@ -156,14 +159,14 @@ export default function BookButton({
 
   useEffect(() => {
     const chs = bookData.indexes.map((x) => x[0]);
-    //   // console.log(chs);
+    if (chs === undefined) return;
     const ch = binarySearch(chs, bookData.progress);
     setChapter(ch + 1);
-    //   // console.log(bookData.indexes[ch]);
+    // console.log(bookData.indexes[ch]);
+    if (bookData.indexes[ch] === undefined) return;
     const sec = binarySearch(bookData.indexes[ch], bookData.progress);
     setSection(sec + 1);
-    //   // console.log(section + 1);
-    // }, []);
+    // console.log(section + 1);
   }, [bookData]);
   const ProgressDisplay = () => {
     return (

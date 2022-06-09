@@ -44,7 +44,7 @@ const BookImportScreenWrapper = ({ navigation }) => {
       // Do something manually
       // ...
       DocumentPicker.getDocumentAsync({
-        copyToCacheDirectory: false,
+        copyToCacheDirectory: true,
         type: "text/plain",
       })
         .then((result) => {

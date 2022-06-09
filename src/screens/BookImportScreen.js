@@ -440,6 +440,7 @@ export default function BookImportScreen({ navigation, route }) {
           });
         })
         .then((result) => {
+          console.log(bookData.uri);
           content = result
             .split("\n")
             .filter((line) => line[0] != "\r" && line[0] != "\n");
